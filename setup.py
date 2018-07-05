@@ -1,12 +1,16 @@
-from setuptools import setup
+#!/usr/bin/env python
+
+from setuptools import setup, find_packages
 
 setup(
     name = 'aggiestack',
-    version = '0.1'
+    version = '0.1',
     author = 'Akhil Babu Manam',
-    install_requires = ['docopt'],
+    author_email = 'manamakhilbabu@gmail.com',
+    packages = find_packages(),
     entry_points = {
         'console_scripts': [
-            'aggiestack=aggiestack.aggiestack:main',
-        ],
+            'aggiestack = aggiestack.cli:main'
+        ]
     },
+    )
