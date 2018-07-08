@@ -23,15 +23,15 @@ def main():
     import aggiestack.commands
     options = docopt(__doc__, version=VERSION)
 
-    print options
+    print options.keys()
 
-    for (k,v) in options.items():
-        if hasattr(aggiestack.commands, k) and v:
-            module = getattr(aggiestack.commands, k)
-            aggiestack.commands = getmembers(module, isclass)
-            command = [command[1] for command in aggiestack.commands if command[0] != 'Base'][0]
-            command = command(options)
-            command.run()
+    #for (k,v) in options.items():
+    #    if hasattr(aggiestack.commands, k) and v:
+    #        module = getattr(aggiestack.commands, k)
+    #        aggiestack.commands = getmembers(module, isclass)
+    #        command = [command[1] for command in aggiestack.commands if command[0] != 'Base'][0]
+    #        command = command(options)
+    #        command.run()
     print "hello"
 
 def hello():
