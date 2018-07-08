@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from setuptools import setup, find_packages, Command
+from aggiestack import __version__
 
 setup(
     name = 'aggiestack',
@@ -10,7 +11,7 @@ setup(
     packages = find_packages(),
     entry_points = {
         'console_scripts':[
-            'aggiestack=cli.cli:main'
+            'aggiestack=aggiestack.cli:main'
         ],
     }
 )
