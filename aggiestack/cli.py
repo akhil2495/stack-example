@@ -9,6 +9,8 @@ Usage:
   aggiestack show images
   aggiestack show flavors
   aggiestack show all
+  aggiestack admin show hardware
+  aggiestack admin can_host <machine_name> <flavor>
 
 Examples:
   aggiestack config --hardware hdwr-config.txt
@@ -18,7 +20,8 @@ Examples:
   aggiestack show images
   aggiestack show flavors
   aggiestack show all
-  
+  aggiestack admin show hardware
+  aggiestack admin can_host <machine_name> <flavor>
 
 Help:
   Have only two types of commands aggiestack config or aggiestack show
@@ -28,9 +31,61 @@ from commands.config import config_command
 from commands.show import show_command
 from commands.config import config_log
 from commands.show import show_log
+from commands.admin import admin_show_command
+from commands.admin import admin_log
+from commands.admin import admin_can_host_command
 from docopt import docopt
 import sys
 import os
+
+def check_command():
+    config_list = [
+        'config --hardware ',
+        'config --images ',
+        'config --flavors '
+    ]
+    show_list = [
+        'show hardware ',
+        'show images ',
+        'show flavors ',
+        'show all '
+    ]
+    admin_list = [
+        'admin show hardware ',
+        'admin can_host '
+    ]
+    check = ''
+    wrong_cmd_flag = False
+    if sys.argv[1] == 'config':
+        if len(sys.argv) != 4:
+            wrong_cmd_flag = True
+        for i in range(len(sys.argv) - 2):
+            check += sys.argv[i+1] + " "
+        if check not in config_list:
+            wrong_cmd_flag = True
+
+    elif sys.argv[1] == 'show':
+        if len(sys.argv) != 3:
+            wrong_cmd_flag = True
+        for i in range(len(sys.argv) - 1):
+            check += sys.argv[i+1] + " "
+        if check not in show_list:
+            wrong_cmd_flag = True
+
+    elif sys.argv[1] == 'admin':
+        if len(sys.argv) == 3:
+            for i in range(len(sys.argv) - 1):
+                check += sys.argv[i+1] + " "
+            if check not in admin_list:
+                wrong_cmd_flag = True
+        elif len(sys.argv) == 5:
+            for i in range(len(sys.argv) - 3):
+                check += sys.argv[i+1] + " "
+            if check not in admin_list:
+                wrong_cmd_flag = True
+        else:
+            wrong_cmd_flag = True
+    return wrong_cmd_flag
 
 def executed_command():
     com = ""
@@ -46,68 +101,49 @@ def executed_command():
 def main():
     import aggiestack.commands
 
+    # checking if commands are good
     dirname = os.path.dirname(os.path.realpath(__file__))
-    arg1_list = ['show', 'config']
-    arg2_list = ['--hardware', '--images', '--flavors']
-
-    if sys.argv[1] not in arg1_list:
-        print 'ERROR : Wrong command arguments'
+    if check_command():
+        print 'ERROR : Wrong commands, use this format'
         if os.path.isfile('log-files/aggiestack-log.txt'):
             with open(os.path.join(dirname, 'log-files/aggiestack-log.txt'), 'a') as file_handle:
-                file_handle.write(executed_command() + 'FAILURE')
+                file_handle.write(executed_command() + 'FAILURE\n')
         else:
             with open(os.path.join(dirname, 'log-files/aggiestack-log.txt'), 'w') as file_handle:
-                file_handle.write(executed_command() + 'FAILURE')
-    elif len(sys.argv) == 4:
-        if sys.argv[2] not in arg2_list:
-            print 'ERROR : Wrong command arguments'
-            if os.path.isfile('log-files/aggiestack-log.txt'):
-                with open(os.path.join(dirname, 'log-files/aggiestack-log.txt'), 'a') as file_handle:
-                    file_handle.write(executed_command() + 'FAILURE')
-            else:
-                with open(os.path.join(dirname, 'log-files/aggiestack-log.txt'), 'w') as file_handle:
-                    file_handle.write(executed_command() + 'FAILURE')
+                file_handle.write(executed_command() + 'FAILURE\n')
 
     options = docopt(__doc__, version='0.1')
 
-    command_check = False
     # for config commands
     if options['config'] == True:
         if options['--hardware'] == True:
             if options['<input_file>']:
                 config_command('hardware', options['<input_file>'], executed_command())
-                command_check = True
-
         elif options['--images'] == True:
             if options['<input_file>']:
                 config_command('images', options['<input_file>'], executed_command())
-                command_check = True
- 
         elif options['--flavors'] == True:
             if options['<input_file>']:
                 config_command('flavors', options['<input_file>'], executed_command())
-                command_check = True
 
     # for show commands
     if options['show'] == True:
         if options['hardware'] == True:
             show_command('hardware', executed_command())
-            command_check = True
-
         elif options['images'] == True:
             show_command('images', executed_command())
-            command_check = True
-
         elif options['flavors'] == True:
             show_command('flavors', executed_command())
-            command_check = True
- 
         elif options['all'] == True:
             show_command('all')
-            command_check = True
 
-    # error message if not a recognized command
-    if command_check == False:
-        print 'ERROR : Wrong commands, use this format'
-        print options
-    
+    # for admin commands
+    if options['admin'] == True:
+        if options['show'] == True:
+            if options['hardware'] == True:
+                admin_show_command(executed_command())
+
+        elif options['can_host'] == True:
+            if options['<machine_host>']:
+                if options['<flavor>']:
+                    admin_can_host_command(executed_command())

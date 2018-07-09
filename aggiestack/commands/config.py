@@ -33,9 +33,10 @@ def config_command(arg1, arg2, arg3):
             dest_path = os.path.join(directory, '../config-files/hdwr-config.txt')
             if src_path != dest_path:
                 copyfile(src_path, dest_path)
+            config_log(arg3 + 'SUCCESS\n')
         else:
             print "ERROR : Specified file does not exist"
-            config_log(arg3 + 'FAILURE')
+            config_log(arg3 + 'FAILURE\n')
 
     elif arg1 == 'images':
         # check if command is successful or not
@@ -43,9 +44,10 @@ def config_command(arg1, arg2, arg3):
             dest_path = os.path.join(directory, '../config-files/image-config.txt')
             if src_path != dest_path:
                 copyfile(src_path, dest_path)
+            config_log(arg3 + 'SUCCESS\n')
         else:
             print "ERROR : Specified file does not exist"
-            config_log(arg3 + 'FAILURE')
+            config_log(arg3 + 'FAILURE\n')
 
     elif arg1 == 'flavors':
         # check if command is successful or not
@@ -53,6 +55,7 @@ def config_command(arg1, arg2, arg3):
             dest_path = os.path.join(directory, '../config-files/flavor-config.txt')
             if src_path != dest_path:
                 copyfile(src_path, dest_path)
+            config_log(arg3 + 'SUCCESS\n')
         else:
             print "ERROR : Specified file does not exist" 
-            config_log(arg3 + 'FAILURE')
+            config_log(arg3 + 'FAILURE\n')
