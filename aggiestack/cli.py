@@ -24,12 +24,8 @@ Help:
   Have only two types of commands aggiestack config or aggiestack show
 """
 
-from inspect import getmembers, isclass
-
+from commands.config import config_command
 from docopt import docopt
-
-import sys
-import argparse
 
 
 def main():
