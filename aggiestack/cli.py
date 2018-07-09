@@ -27,7 +27,14 @@ Help:
 from commands.config import config_command
 from commands.show import show_command
 from docopt import docopt
+import sys
 
+def executed_command():
+    com = ""
+    for word in sys.argv:
+        com += word + " "
+    com += ":: "
+    return com
 
 def main():
     import aggiestack.commands
@@ -71,5 +78,6 @@ def main():
 
     # error message if not a recognized command
     if command_check == False:
-        print 'Error : Wrong commands, use this format'
+        print 'ERROR : Wrong commands, use this format'
         print options
+        
