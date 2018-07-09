@@ -32,56 +32,44 @@ from docopt import docopt
 def main():
     import aggiestack.commands
     options = docopt(__doc__, version='0.1')
-    
-    #print "option"
-    #print options
 
+    command_check = False
     # for config commands
     if options['config'] == True:
         if options['--hardware'] == True:
             if options['<input_file>']:
                 config_command('hardware', options['<input_file>'])
+                command_check = True
 
         elif options['--images'] == True:
             if options['<input_file>']:
                 config_command('images', options['<input_file>'])
+                command_check = True
  
         elif options['--flavors'] == True:
             if options['<input_file>']:
                 config_command('flavors', options['<input_file>'])
+                command_check = True
 
+    # for show commands
     if options['show'] == True:
         if options['hardware'] == True:
             show_command('hardware')
+            command_check = True
 
         elif options['images'] == True:
             show_command('images')
+            command_check = True
 
         elif options['flavors'] == True:
             show_command('flavors')
+            command_check = True
  
         elif options['all'] == True:
             show_command('all')
+            command_checl = True
 
-    #parser = ArgumentParser()
-    #action_parsers = parser.add_subparsers(title="available actions")
-
-    #config_parser = action_parsers.add_parser("config")
-    #show_parser = actions_parser.add_parser("show")
-
-    # other arguments for show
-    # show_parser.add_argument
-    #print sys.argv[0]
-    #print sys.argv[1]
-    #print len(sys.argv)
-
-    #print "args"
-    #import argparse
-    #parser = argparse.ArgumentParser()
-    #args = parser.parse_args()
-   
-    #        aggiestack.commands = getmembers(module, isclass)
-    #        command = [command[1] for command in aggiestack.commands if command[0] != 'Base'][0]
-    #        command = command(options)
-    #        command.run()
-    #print "hello"
+    # error message if not a recognized command
+    if command_check == False:
+        print 'Error : Wrong commands, use this format'
+        print options

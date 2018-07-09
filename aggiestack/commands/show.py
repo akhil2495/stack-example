@@ -19,18 +19,24 @@ def show_command(arg1):
         if os.path.isfile(path):
             with open(path) as file_handle:
                 print file_handle.read()
+        else:
+            print 'Error : Hardware information not yet configured'
 
     elif arg1 == 'images':
         path = os.path.join(directory, '../config-files/image-config.txt')
         if os.path.isfile(path):
             with open(path) as file_handle:
                 print file_handle.read()
+        else:
+            print 'Error : Image information not yet configured'
 
     elif arg1 == 'flavors':
         path = os.path.join(directory, '../config-files/flavor-config.txt')
         if os.path.isfile(path):
             with open(path) as file_handle:
                 print file_handle.read()
+        else:
+            print 'Error : Flavors information not yet configured'
 
     elif arg1 == 'all':
         path1 = os.path.join(directory, '../config-files/hdwr-config.txt')
@@ -46,3 +52,5 @@ def show_command(arg1):
                     with open(path3) as file3:
                         print file3.read()
 
+    else:
+        print 'Error : Wrong command, can only show "hardware", "images", "flavors" or "all"'
