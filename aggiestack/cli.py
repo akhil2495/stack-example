@@ -73,7 +73,7 @@ def check_command():
             wrong_cmd_flag = True
 
     elif sys.argv[1] == 'admin':
-        if len(sys.argv) == 3:
+        if len(sys.argv) == 4:
             for i in range(len(sys.argv) - 1):
                 check += sys.argv[i+1] + " "
             if check not in admin_list:
@@ -115,35 +115,38 @@ def main():
     options = docopt(__doc__, version='0.1')
 
     # for config commands
-    if options['config'] == True:
-        if options['--hardware'] == True:
-            if options['<input_file>']:
-                config_command('hardware', options['<input_file>'], executed_command())
-        elif options['--images'] == True:
-            if options['<input_file>']:
-                config_command('images', options['<input_file>'], executed_command())
-        elif options['--flavors'] == True:
-            if options['<input_file>']:
-                config_command('flavors', options['<input_file>'], executed_command())
+    if sys.argv[1] == 'config':
+        if options['config'] == True:
+            if options['--hardware'] == True:
+                if options['<input_file>']:
+                    config_command('hardware', options['<input_file>'], executed_command())
+            elif options['--images'] == True:
+                if options['<input_file>']:
+                    config_command('images', options['<input_file>'], executed_command())
+            elif options['--flavors'] == True:
+                if options['<input_file>']:
+                    config_command('flavors', options['<input_file>'], executed_command())
 
     # for show commands
-    if options['show'] == True:
-        if options['hardware'] == True:
-            show_command('hardware', executed_command())
-        elif options['images'] == True:
-            show_command('images', executed_command())
-        elif options['flavors'] == True:
-            show_command('flavors', executed_command())
-        elif options['all'] == True:
-            show_command('all')
-
-    # for admin commands
-    if options['admin'] == True:
+    if sys.argv[1] == 'show':
         if options['show'] == True:
             if options['hardware'] == True:
-                admin_show_command(executed_command())
+                show_command('hardware', executed_command())
+            elif options['images'] == True:
+                show_command('images', executed_command())
+            elif options['flavors'] == True:
+                show_command('flavors', executed_command())
+            elif options['all'] == True:
+                show_command('all',  executed_command())
 
-        elif options['can_host'] == True:
-            if options['<machine_host>']:
-                if options['<flavor>']:
-                    admin_can_host_command(executed_command())
+    # for admin commands
+    if sys.argv[1] == 'admin':
+        if options['admin'] == True:
+            if options['show'] == True:
+                if options['hardware'] == True:
+                    admin_show_command(executed_command())
+
+            elif options['can_host'] == True:
+                if options['<machine_name>']:
+                    if options['<flavor>']:
+                        admin_can_host_command(options['<machine_name>'], options['<flavor>'], executed_command())

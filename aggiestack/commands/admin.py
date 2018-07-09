@@ -12,6 +12,7 @@ def parse_flavors():
                     line = line.rstrip()
                     words = line.split()
                     flavors[words[0]] = {'mem': int(words[1]), 'ndisks': int(words[2]), 'vcpus': int(words[3])}
+                i += 1
     return flavors
 
 def parse_hardware():
@@ -26,6 +27,7 @@ def parse_hardware():
                     line = line.rstrip()
                     words = line.split()
                     hardware[words[0]] = {'ip': words[1], 'mem': int(words[2]), 'ndisks': int(words[3]), 'vcpus': int(words[4])}
+                i += 1
     return hardware
 
 def admin_log(arg):
@@ -46,10 +48,10 @@ def admin_show_command(arg):
     if os.path.isfile(path):
         with open(path) as file_handle:
             print file_handle.read()
-        show_log(arg + 'SUCCESS\n')
+        admin_log(arg + 'SUCCESS\n')
     else:
         print 'ERROR : Hardware information not yet configured'
-        show_log(arg + 'FAILURE\n')
+        admin_log(arg + 'FAILURE\n')
 
 def admin_can_host_command(arg1, arg2, arg3):
     # arg1 : name of the hardware
