@@ -13,10 +13,10 @@ def config_log(arg):
     directory = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(directory, '../log-files/aggiestack-log.txt')
     if os.path.isfile(path):
-        with open(path) as file_handle:
+        with open(path, 'a') as file_handle:
             file_handle.write(arg)
     else:
-        with open(path) as file_handle:
+        with open(path, 'w') as file_handle:
             file_handle.write(arg)
 
 def config_command(arg1, arg2, arg3):
@@ -25,28 +25,34 @@ def config_command(arg1, arg2, arg3):
     # arg3 : executed command
 
     directory = os.path.dirname(os.path.realpath(__file__)) 
-    path = os.path.join(directory, '../' + arg2)
+    src_path = os.path.join(directory, '../' + arg2)
     
     if arg1 == 'hardware':
         # check if the file is in right format
-        if os.path.isfile(path):
-            copyfile(path, '../config-files/hdwr-config.txt')
+        if os.path.isfile(src_path):
+            dest_path = os.path.join(directory, '../config-files/hdwr-config.txt')
+            if src_path != dest_path:
+                copyfile(src_path, dest_path)
         else:
             print "ERROR : Specified file does not exist"
-            config_log(arg3, 'FAILURE')
+            config_log(arg3 + 'FAILURE')
 
     elif arg1 == 'images':
         # check if command is successful or not
-        if os.path.isfile(path):
-            copyfile(path, '../config-files/image-config.txt')
+        if os.path.isfile(src_path):
+            dest_path = os.path.join(directory, '../config-files/image-config.txt')
+            if src_path != dest_path:
+                copyfile(src_path, dest_path)
         else:
             print "ERROR : Specified file does not exist"
-            config_log(arg3, 'FAILURE')
+            config_log(arg3 + 'FAILURE')
 
     elif arg1 == 'flavors':
         # check if command is successful or not
-        if os.path.isfile(path):
-            copyfile(path, '../config-files/flavor-config.txt')
+        if os.path.isfile(src_path):
+            dest_path = os.path.join(directory, '../config-files/flavor-config.txt')
+            if src_path != dest_path:
+                copyfile(src_path, dest_path)
         else:
             print "ERROR : Specified file does not exist" 
-            config_log(arg3, 'FAILURE')
+            config_log(arg3 + 'FAILURE')

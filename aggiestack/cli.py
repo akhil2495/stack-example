@@ -45,8 +45,12 @@ def executed_command():
 
 def main():
     import aggiestack.commands
+
     dirname = os.path.dirname(os.path.realpath(__file__))
-    if sys.argv[1] is not 'show' or sys.argv[1] is not 'config':
+    arg1_list = ['show', 'config']
+    arg2_list = ['--hardware', '--images', '--flavors']
+
+    if sys.argv[1] not in arg1_list:
         print 'ERROR : Wrong command arguments'
         if os.path.isfile('log-files/aggiestack-log.txt'):
             with open(os.path.join(dirname, 'log-files/aggiestack-log.txt'), 'a') as file_handle:
