@@ -105,7 +105,7 @@ def main():
     dirname = os.path.dirname(os.path.realpath(__file__))
     if check_command():
         print 'ERROR : Wrong commands, use this format'
-        if os.path.isfile('log-files/aggiestack-log.txt'):
+        if os.path.isfile(os.path.join(dirname, 'log-files/aggiestack-log.txt')):
             with open(os.path.join(dirname, 'log-files/aggiestack-log.txt'), 'a') as file_handle:
                 file_handle.write(executed_command() + 'FAILURE\n')
         else:
@@ -150,3 +150,6 @@ def main():
                 if options['<machine_name>']:
                     if options['<flavor>']:
                         admin_can_host_command(options['<machine_name>'], options['<flavor>'], executed_command())
+
+if __name__ == '__main__':
+    main()

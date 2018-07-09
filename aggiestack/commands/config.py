@@ -25,13 +25,13 @@ def config_command(arg1, arg2, arg3):
     # arg3 : executed command
 
     directory = os.path.dirname(os.path.realpath(__file__)) 
-    src_path = os.path.join(directory, '../' + arg2)
+    src_path = os.path.join(os.getcwd(), arg2)
     
     if arg1 == 'hardware':
         # check if the file is in right format
         if os.path.isfile(src_path):
             dest_path = os.path.join(directory, '../config-files/hdwr-config.txt')
-            if src_path != dest_path:
+            if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
             config_log(arg3 + 'SUCCESS\n')
         else:
@@ -42,7 +42,7 @@ def config_command(arg1, arg2, arg3):
         # check if command is successful or not
         if os.path.isfile(src_path):
             dest_path = os.path.join(directory, '../config-files/image-config.txt')
-            if src_path != dest_path:
+            if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
             config_log(arg3 + 'SUCCESS\n')
         else:
@@ -53,7 +53,7 @@ def config_command(arg1, arg2, arg3):
         # check if command is successful or not
         if os.path.isfile(src_path):
             dest_path = os.path.join(directory, '../config-files/flavor-config.txt')
-            if src_path != dest_path:
+            if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
             config_log(arg3 + 'SUCCESS\n')
         else:

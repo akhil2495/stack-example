@@ -61,16 +61,28 @@ def admin_can_host_command(arg1, arg2, arg3):
     flavors = parse_flavors()
     hardware = parse_hardware()
 
+    if arg2 not in flavors.keys():
+        print 'ERROR : Wrong flavor name'
+        admin_log(arg3 + 'FAILURE\n')
+        return
+    if arg1 not in hardware.keys():
+        print 'ERROR : Wrong hardware name'
+        admin_log(arg3 + 'FAILURE\n')
+        return
+
     # checking if the machine name is in the hardware file and if the flavor can fit
     if flavors[arg2]['mem'] > hardware[arg1]['mem']:
         print 'ERROR : Memory insufficient'
         admin_log(arg3 + 'FAILURE\n')
+        return
     elif flavors[arg2]['ndisks'] > hardware[arg1]['ndisks']:
         print 'ERROR : Not sufficient disks'
         admin_log(arg3 + 'FAILURE\n')
+        return
     elif flavors[arg2]['vcpus'] > hardware[arg1]['vcpus']:
         print 'ERROR : Not sufficient cpus'
         admin_log(arg3 + 'FAILURE\n')
+        return
     else:
         print 'yes'
         admin_log(arg3 + 'SUCCESS\n')
