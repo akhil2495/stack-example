@@ -8,6 +8,7 @@
 
 import os
 from ../cli import executed_command
+from shutil import copyfile
 
 def config_log(arg):
     directory = os.path.dirname(os.path.realpath(__file__))
@@ -22,22 +23,30 @@ def config_command(arg1, arg2):
 
     directory = os.path.dirname(os.path.realpath(__file__)) 
     path = os.path.join(directory, '../' + arg2)
-    file_handle = open(path)
     
-    if arg1 == 'hardware': 
-        # check if command is successful or not
-
-        # checking working for now
-        print ("checking success for now")
+    if arg1 == 'hardware':
+        # check if the file is in right format
+        if os.path.isfile(path):
+            try:
+                copyfile(path, '../config-files/hdwr-config.txt')
+        else:
+            print "ERROR : Specified file does not exist"
+            config_log('FAILURE')
 
     elif arg1 == 'images':
         # check if command is successful or not
-
-        # checking working for now
-        print 'checking success for now'
+        if os.path.isfile(path):
+            try:
+                copyfile(path, '../config-files/image-config.txt')
+        else:
+            print "ERROR : Specified file does not exist"
+            config_log('FAILURE')
 
     elif arg1 == 'flavors':
         # check if command is successful or not
-
-        # checking working for now
-        print 'checking success for now'                
+        if os.path.isfile(path):
+            try:
+                copyfile(path, '../config-files/flavor-config.txt')
+        else:
+            print "ERROR : Specified file does not exist" 
+            config_log('FAILURE')
