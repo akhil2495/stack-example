@@ -7,13 +7,42 @@
 # aggiestack show flavors  ---> prints the list of available flavors for the user when creating virtual machines
 # aggiestack show all      ---> prints all the above messages
 
-import .base from Base
+import os
 
-class Show(Base):
+def show_command(arg1):
+    # arg1 : hardware , images , flavors
 
-    def run(self):
-        # check the next arguments and perform accordingly
+    directory = os.path.dirname(os.path.realpath(__file__)) 
+    
+    if arg1 == 'hardware':
+        path = os.path.join(directory, '../config-files/hdwr-config.txt') 
+        if os.path.isfile(path):
+            with open(path) as file_handle:
+                print file_handle.read()
 
-        # read the hardware information from some file
-        # read the images information from some file
-        # read the flavors information from some file
+    elif arg1 == 'images':
+        path = os.path.join(directory, '../config-files/image-config.txt')
+        if os.path.isfile(path):
+            with open(path) as file_handle:
+                print file_handle.read()
+
+    elif arg1 == 'flavors':
+        path = os.path.join(directory, '../config-files/flavor-config.txt')
+        if os.path.isfile(path):
+            with open(path) as file_handle:
+                print file_handle.read()
+
+    elif arg1 == 'all':
+        path1 = os.path.join(directory, '../config-files/hdwr-config.txt')
+        path2 = os.path.join(directory, '../config-files/image-config.txt')
+        path3 = os.path.join(directory, '../config-files/flavor-config.txt')
+        if os.path.isfile(path1):
+            if os.path.isfile(path2):
+                if os.path.isfile(path3):
+                    with open(path1) as file1:
+                        print file1.read()
+                    with open(path2) as file2:
+                        print file2.read()
+                    with open(path3) as file3:
+                        print file3.read()
+

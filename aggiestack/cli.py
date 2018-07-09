@@ -25,6 +25,7 @@ Help:
 """
 
 from commands.config import config_command
+from commands.show import show_command
 from docopt import docopt
 
 
