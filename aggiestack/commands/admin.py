@@ -2,7 +2,7 @@ import os
 
 def parse_flavors():
     directory = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(directory, '../config-files/flavor-config.txt')
+    path = os.path.join(directory, '../flavor-config.txt')
     flavors = dict()
     if os.path.isfile(path):
         with open(path) as file_handle:
@@ -17,7 +17,7 @@ def parse_flavors():
 
 def parse_hardware():
     directory = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(directory, '../config-files/hdwr-config.txt')
+    path = os.path.join(directory, '../hdwr-config.txt')
     hardware = dict()
     if os.path.isfile(path):
         with open(path) as file_handle:
@@ -32,7 +32,7 @@ def parse_hardware():
 
 def admin_log(arg):
     directory = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(directory, '../log-files/aggiestack-log.txt')
+    path = os.path.join(directory, '../aggiestack-log.txt')
     if os.path.isfile(path):
         with open(path, 'a') as file_handle:
             file_handle.write(arg)
@@ -44,7 +44,7 @@ def admin_show_command(arg):
     # arg : executed command
 
     directory = os.path.dirname(os.path.realpath(__file__)) 
-    path = os.path.join(directory, '../config-files/hdwr-config.txt')
+    path = os.path.join(directory, '../hdwr-config.txt')
     if os.path.isfile(path):
         with open(path) as file_handle:
             print file_handle.read()

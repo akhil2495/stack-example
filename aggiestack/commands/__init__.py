@@ -1,1 +1,1 @@
-from base import *
+version = '0.1'

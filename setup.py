@@ -9,9 +9,10 @@ setup(
     author = 'Akhil Babu Manam',
     author_email = 'manamakhilbabu@gmail.com',
     packages = find_packages(),
+    install_requires = ['docopt'],
     entry_points = {
         'console_scripts':[
             'aggiestack=aggiestack.cli:main'
         ],
-    }
+    }, 
 )

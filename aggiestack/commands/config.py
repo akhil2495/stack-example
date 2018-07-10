@@ -11,7 +11,7 @@ from shutil import copyfile
 
 def config_log(arg):
     directory = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(directory, '../log-files/aggiestack-log.txt')
+    path = os.path.join(directory, '../aggiestack-log.txt')
     if os.path.isfile(path):
         with open(path, 'a') as file_handle:
             file_handle.write(arg)
@@ -30,7 +30,7 @@ def config_command(arg1, arg2, arg3):
     if arg1 == 'hardware':
         # check if the file is in right format
         if os.path.isfile(src_path):
-            dest_path = os.path.join(directory, '../config-files/hdwr-config.txt')
+            dest_path = os.path.join(directory, '../hdwr-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
             config_log(arg3 + 'SUCCESS\n')
@@ -41,7 +41,7 @@ def config_command(arg1, arg2, arg3):
     elif arg1 == 'images':
         # check if command is successful or not
         if os.path.isfile(src_path):
-            dest_path = os.path.join(directory, '../config-files/image-config.txt')
+            dest_path = os.path.join(directory, '../image-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
             config_log(arg3 + 'SUCCESS\n')
@@ -52,7 +52,7 @@ def config_command(arg1, arg2, arg3):
     elif arg1 == 'flavors':
         # check if command is successful or not
         if os.path.isfile(src_path):
-            dest_path = os.path.join(directory, '../config-files/flavor-config.txt')
+            dest_path = os.path.join(directory, '../flavor-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
             config_log(arg3 + 'SUCCESS\n')

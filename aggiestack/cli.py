@@ -105,11 +105,11 @@ def main():
     dirname = os.path.dirname(os.path.realpath(__file__))
     if check_command():
         print 'ERROR : Wrong commands, use this format'
-        if os.path.isfile(os.path.join(dirname, 'log-files/aggiestack-log.txt')):
-            with open(os.path.join(dirname, 'log-files/aggiestack-log.txt'), 'a') as file_handle:
+        if os.path.isfile(os.path.join(dirname, 'aggiestack-log.txt')):
+            with open(os.path.join(dirname, 'aggiestack-log.txt'), 'a') as file_handle:
                 file_handle.write(executed_command() + 'FAILURE\n')
         else:
-            with open(os.path.join(dirname, 'log-files/aggiestack-log.txt'), 'w') as file_handle:
+            with open(os.path.join(dirname, 'aggiestack-log.txt'), 'w') as file_handle:
                 file_handle.write(executed_command() + 'FAILURE\n')
 
     options = docopt(__doc__, version='0.1')
