@@ -23,7 +23,7 @@ def show_command(arg1, arg2):
     # arg1 : hardware , images , flavors
 
     directory = os.path.dirname(os.path.realpath(__file__)) 
-    print os.getcwd()
+    #print os.getcwd()
     if arg1 == 'hardware':
         path = os.path.join(directory, '../hdwr-config.txt') 
         if os.path.isfile(path):
