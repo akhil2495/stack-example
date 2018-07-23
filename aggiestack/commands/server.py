@@ -53,7 +53,7 @@ def parse_instances():
                     temp['image'] = words[1]
                     temp['flavor'] = words[2]
                     instance[words[0]] = temp
-     return instance
+    return instance
 
 def update_instances(instances):
     directory = os.path.dirname(os.path.realpath(__file__))
@@ -62,7 +62,7 @@ def update_instances(instances):
     if os.path.isfile(path):
         with open(path, 'w') as file_handle:
             f.write(str(len(instances.keys())))
-            for key in instances.keys()
+            for key in instances.keys():
                 f.write(key + ' ' + instances[key]['image'] + ' ' + instances[key]['flavor'])
     return True
 
