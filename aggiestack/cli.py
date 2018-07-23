@@ -11,6 +11,9 @@ Usage:
   aggiestack show all
   aggiestack admin show hardware
   aggiestack admin can_host <machine_name> <flavor>
+  aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
+  aggiestack server delete <instance_name>
+  aggiestack server list
 
 Examples:
   aggiestack config --hardware hdwr-config.txt
@@ -22,6 +25,9 @@ Examples:
   aggiestack show all
   aggiestack admin show hardware
   aggiestack admin can_host <machine_name> <flavor>
+  aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
+  aggiestack server delete <instance_name>
+  aggiestack server list
 
 Help:
   Have only two types of commands aggiestack config or aggiestack show
@@ -34,6 +40,10 @@ from commands.show import show_log
 from commands.admin import admin_show_command
 from commands.admin import admin_log
 from commands.admin import admin_can_host_command
+from commands.server import server_log
+from commands.server import server_create_command
+from commands.server import server_delete_command
+from commands.server import server_list_command 
 from docopt import docopt
 import sys
 import os
@@ -53,6 +63,11 @@ def check_command():
     admin_list = [
         'admin show hardware ',
         'admin can_host '
+    ]
+    server_list = [
+        'server create --image '
+        'server delete '
+        'server list '
     ]
     check = ''
     wrong_cmd_flag = False
@@ -85,6 +100,31 @@ def check_command():
                 wrong_cmd_flag = True
         else:
             wrong_cmd_flag = True
+ 
+    elif sys.argv[1] == 'server':
+        if len(sys.argv) == 8:
+            check = ''
+            for i in range(3):
+                check += sys.argv[i+1] + ' '
+            if check not in server_list:
+                wrong_cmd_flag = True
+            if sys.argv[5] != '--flavor':
+                wrong_cmd_flag = True
+        elif len(sys.argv == 4):
+            check = ''
+            for i in range(2):
+                check += sys.argv[i+1] + ' '
+            if check not in server_list:
+                wrong_cmd_flag = True
+        elif len(sys.argv == 3):
+            check = ''
+            for i in range(2):
+                check += sys.argv[i+1] + ' '
+            if check not in server_list:
+                wrong_cmd_flag = True
+        else:
+            wrong_cmd_flag = True
+
     return wrong_cmd_flag
 
 def executed_command():
@@ -150,6 +190,24 @@ def main():
                 if options['<machine_name>']:
                     if options['<flavor>']:
                         admin_can_host_command(options['<machine_name>'], options['<flavor>'], executed_command())
+
+    # for server commands
+    if sys.argv[1] == 'server':
+        if options['server'] == True:
+            if options['create'] == True:
+                if options['--image'] == True:
+                    if options['<image_name>']:
+                        if options['--flavor'] == True:
+                            if options['<flavor_name>']:
+                                if options['<instance_name>']:
+                                    server_create_command(options['<image_name>'], options['<flavor_name>'], options['<instance_name>'], executed_command())
+
+            elif options['delete'] == True:
+                if options['<instance_name>']:
+                    server_delete_command(options['<instance_name>'], executed_command())
+
+            elif options['list'] == True:
+                server_list_command(executed_command())
 
 if __name__ == '__main__':
     main()
