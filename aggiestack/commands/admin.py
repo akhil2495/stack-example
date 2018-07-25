@@ -30,15 +30,16 @@ def parse_hardware():
                 i += 1
     return hardware
 
-def admin_log(arg):
-    directory = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(directory, '../aggiestack-log.txt')
-    if os.path.isfile(path):
-        with open(path, 'a') as file_handle:
-            file_handle.write(arg)
-    else:
-        with open(path, 'w') as file_handle:
-            file_handle.write(arg)
+def admin_log(arg1, arg2):
+    if arg1:
+        directory = os.path.dirname(os.path.realpath(__file__))
+        path = os.path.join(directory, '../aggiestack-log.txt')
+        if os.path.isfile(path):
+            with open(path, 'a') as file_handle:
+                file_handle.write(arg1 + arg2)
+        else:
+            with open(path, 'w') as file_handle:
+                file_handle.write(arg1 + arg2)
 
 def admin_show_command(arg):
     # arg : executed command
@@ -48,41 +49,41 @@ def admin_show_command(arg):
     if os.path.isfile(path):
         with open(path) as file_handle:
             print file_handle.read()
-        admin_log(arg + 'SUCCESS\n')
+        admin_log(arg, 'SUCCESS\n')
     else:
         print 'ERROR : Hardware information not yet configured'
-        admin_log(arg + 'FAILURE\n')
+        admin_log(arg, 'FAILURE\n')
 
 def admin_can_host_command(arg1, arg2, arg3):
     # arg1 : name of the hardware
     # arg2 : name of the flavor
-    # arg3 : executed command
+    # arg3 : executed command, pass '' for using just the function
 
     flavors = parse_flavors()
     hardware = parse_hardware()
 
     if arg2 not in flavors.keys():
         print 'ERROR : Wrong flavor name'
-        admin_log(arg3 + 'FAILURE\n')
+        admin_log(arg3, 'FAILURE\n')
         return
     if arg1 not in hardware.keys():
         print 'ERROR : Wrong hardware name'
-        admin_log(arg3 + 'FAILURE\n')
+        admin_log(arg3, 'FAILURE\n')
         return
 
     # checking if the machine name is in the hardware file and if the flavor can fit
     if flavors[arg2]['mem'] > hardware[arg1]['mem']:
         print 'ERROR : Memory insufficient'
-        admin_log(arg3 + 'FAILURE\n')
+        admin_log(arg3, 'FAILURE\n')
         return
     elif flavors[arg2]['ndisks'] > hardware[arg1]['ndisks']:
         print 'ERROR : Not sufficient disks'
-        admin_log(arg3 + 'FAILURE\n')
+        admin_log(arg3, 'FAILURE\n')
         return
     elif flavors[arg2]['vcpus'] > hardware[arg1]['vcpus']:
         print 'ERROR : Not sufficient cpus'
-        admin_log(arg3 + 'FAILURE\n')
+        admin_log(arg3, 'FAILURE\n')
         return
     else:
         print 'yes'
-        admin_log(arg3 + 'SUCCESS\n')
+        admin_log(arg3, 'SUCCESS\n')
