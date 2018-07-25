@@ -56,10 +56,13 @@ def parse_images():
                 i += 1
     return image
 
-def parse_instances():
+def parse_instances(arg):
+    # arg can be 'instance2imageflavor' or 'server2instance'
+    
     directory = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(directory, '../instance-config.txt')
     instance = dict()
+    server = dict()
     if os.path.isfile(path):
         with open(path) as file_handle:
             i = 0
@@ -68,10 +71,16 @@ def parse_instances():
                 if i > 0:
                     line = line.rstrip()
                     words = line.split()
-                    temp['image'] = words[1]
-                    temp['flavor'] = words[2]
-                    instance[words[0]] = temp
-    return instance
+                    if arg == 'instance2imageflavor':
+                        temp['image'] = words[2]
+                        temp['flavor'] = words[3]
+                        instance[words[0]] = temp
+                    elif arg == 'server2instance':
+                        server[words[1]] = words[0]
+    if arg == 'instance2imageflavor':
+        return instance
+    elif arg == 'server2instance':
+        return server
 
 def update_instances(instances):
     directory = os.path.dirname(os.path.realpath(__file__))
@@ -81,5 +90,5 @@ def update_instances(instances):
         with open(path, 'w') as file_handle:
             f.write(str(len(instances.keys())))
             for key in instances.keys():
-                f.write(key + ' ' + instances[key]['image'] + ' ' + instances[key]['flavor'])
+                f.write(key + ' ' + instances[key]['server'] + instances[key]['image'] + ' ' + instances[key]['flavor'])
     return True
