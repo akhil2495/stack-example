@@ -1,25 +1,8 @@
-# command config
-
-# help documentation
-# commands possible :
-# aggiestack config --hardware file.txt ---> prints the h/w info available on cloud
-# aggiestack config --images file.txt ---> prints the images available for the user to choose when creating virtual machines
-# aggiestack config --flavors file.txt ---> prints the list of available flavors for the user when creating virtual machines
-
 import os
 from shutil import copyfile
+from helpers import log
 
-def config_log(arg):
-    directory = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(directory, '../aggiestack-log.txt')
-    if os.path.isfile(path):
-        with open(path, 'a') as file_handle:
-            file_handle.write(arg)
-    else:
-        with open(path, 'w') as file_handle:
-            file_handle.write(arg)
-
-def config_command(arg1, arg2, arg3):
+def config_command(arg1, arg2, arg3 = ''):
     # arg1 : hardware , images , flavors
     # arg2 : filename
     # arg3 : executed command
@@ -33,10 +16,10 @@ def config_command(arg1, arg2, arg3):
             dest_path = os.path.join(directory, '../hdwr-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
-            config_log(arg3 + 'SUCCESS\n')
+            log(arg3, 'SUCCESS\n')
         else:
             print "ERROR : Specified file does not exist"
-            config_log(arg3 + 'FAILURE\n')
+            log(arg3, 'FAILURE\n')
 
     elif arg1 == 'images':
         # check if command is successful or not
@@ -44,10 +27,10 @@ def config_command(arg1, arg2, arg3):
             dest_path = os.path.join(directory, '../image-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
-            config_log(arg3 + 'SUCCESS\n')
+            log(arg3, 'SUCCESS\n')
         else:
             print "ERROR : Specified file does not exist"
-            config_log(arg3 + 'FAILURE\n')
+            log(arg3, 'FAILURE\n')
 
     elif arg1 == 'flavors':
         # check if command is successful or not
@@ -55,7 +38,7 @@ def config_command(arg1, arg2, arg3):
             dest_path = os.path.join(directory, '../flavor-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
-            config_log(arg3 + 'SUCCESS\n')
+            log(arg3, 'SUCCESS\n')
         else:
             print "ERROR : Specified file does not exist" 
-            config_log(arg3 + 'FAILURE\n')
+            log(arg3, 'FAILURE\n')
