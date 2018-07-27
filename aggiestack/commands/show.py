@@ -12,30 +12,30 @@ def show_command(arg1, arg2 = ''):
         if os.path.isfile(path):
             with open(path) as file_handle:
                 print file_handle.read()
-            log(arg2, 'SUCCESS\n')
+            log(arg2, 'SUCCESS\n', '')
         else:
-            print 'ERROR : Hardware information not yet configured'
-            log(arg2, 'FAILURE\n')
+            ERR_MSG = 'ERROR : Hardware information not yet configured'
+            log(arg2, 'FAILURE\n', '')
 
     elif arg1 == 'images':
         path = os.path.join(directory, '../image-config.txt')
         if os.path.isfile(path):
             with open(path) as file_handle:
                 print file_handle.read()
-            log(arg2, 'SUCCESS\n')
+            log(arg2, 'SUCCESS\n', '')
         else:
-            print 'ERROR : Image information not yet configured'
-            log(arg2, 'FAILURE\n')
+            ERR_MSG = 'ERROR : Image information not yet configured'
+            log(arg2, 'FAILURE\n', ERR_MSG)
             
     elif arg1 == 'flavors':
         path = os.path.join(directory, '../flavor-config.txt')
         if os.path.isfile(path):
             with open(path) as file_handle:
                 print file_handle.read()
-            log(arg2, 'SUCCESS\n')
+            log(arg2, 'SUCCESS\n', '')
         else:
-            print 'ERROR : Flavors information not yet configured'
-            log(arg2, 'FAILURE\n')
+            ERR_MSG = 'ERROR : Flavors information not yet configured'
+            log(arg2, 'FAILURE\n', ERR_MSG)
 
     elif arg1 == 'all':
         path1 = os.path.join(directory, '../hdwr-config.txt')
@@ -52,16 +52,16 @@ def show_command(arg1, arg2 = ''):
                     with open(path3) as file3:
                         print file3.read()
                     error_flag = True
-                    log(arg2, 'SUCCESS\n')
+                    log(arg2, 'SUCCESS\n', '')
                 else:
-                    print 'ERROR : Flavors information not yet configured'
+                    ERR_MSG = 'ERROR : Flavors information not yet configured'
             else:
-                print 'ERROR : Images information not yet configured'
+                ERR_MSG = 'ERROR : Images information not yet configured'
         else:
-            print 'ERROR : Hardware information not yet configured'
+            ERR_MSG = 'ERROR : Hardware information not yet configured'
         if error_flag == False:
-            log(arg2, 'FAILURE\n')
+            log(arg2, 'FAILURE\n', ERR_MSG)
 
     else:
-        print 'ERROR : Wrong command, can only show "hardware", "images", "flavors" or "all"'
-        log(arg2, 'FAILURE\n')
+        ERR_MSG = 'ERROR : Wrong command, can only show "hardware", "images", "flavors" or "all"'
+        log(arg2, 'FAILURE\n', ERR_MSG)

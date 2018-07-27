@@ -33,7 +33,7 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
     flavors = parse_flavors()
     instances = parse_instances()
     if arg1 in images:
-        if agr2 in flavors:
+        if arg2 in flavors:
             instances[arg3] = {'image': arg1, 'flavor': arg2}
             # search for a server (verify if it can_host)
             hardware = parse_hardware('current')
@@ -42,7 +42,7 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
             
             runnable_servers = []
             for server in servers.keys():
-                if admin_can_host_command(server, arg2, executed_command):
+                if admin_can_host_command(server, arg2, ''):
                     runnable_servers.append(server)
             
             # re do a sophisticated strategy for choosing server
@@ -53,15 +53,18 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
                 log(arg4, 'FAILURE\n', ERR_MSG)
                 return
             
-            instances[arg3]['server'] = servers[server]
+            if arg3 not in instances.keys():
+                instances[arg3] = {'image': arg1, 'flavor': arg2, 'server': server}
+            else:
+                instances[arg3]['server'] = server
             updated = update_instances(instances)
             
             # update server config file
-            runnable_servers[0]['mem'] -= flavors[instances[arg3]['flavor']]['mem']
-            runnable_servers[0]['ndisks'] -= flavors[instances[arg3]['flavor']]['ndisks']
-            runnable_servers[0]['vcpus'] -= flavors[instances[arg3]['flavor']]['vcpus']
-            update_hardware(runnable_servers, hardware['rack'])
-            log(arg4, 'SUCCESS\n')
+            servers[server]['mem'] -= flavors[instances[arg3]['flavor']]['mem']
+            servers[server]['ndisks'] -= flavors[instances[arg3]['flavor']]['ndisks']
+            servers[server]['vcpus'] -= flavors[instances[arg3]['flavor']]['vcpus']
+            update_hardware(servers, hardware['rack'])
+            log(arg4, 'SUCCESS\n', '')
         else:
             ERR_MSG = 'ERROR: specified wrong flavor name'
             log(arg4, 'FAILURE\n', ERR_MSG)
@@ -74,7 +77,7 @@ def server_delete_command(arg1, arg2 = ''):
     # arg2 => executed command
     
     # delete instance
-    instances = parse_instances('instance2imageflavor')
+    instances = parse_instances()
     if instances.has_key(arg1):
         hardware = parse_hardware('current')
         servers = hardware['server']
@@ -84,7 +87,7 @@ def server_delete_command(arg1, arg2 = ''):
         instances.pop(arg1, None)
         updated = update_instances(instances)
         update_hardware(servers, hardware['rack'])
-        log(arg2, 'SUCCESS\n')
+        log(arg2, 'SUCCESS\n', '')
     else:
         ERR_MSG = 'ERROR: specified instance name does not exist'
         log(arg2, 'FAILURE\n', ERR_MSG)
@@ -92,8 +95,8 @@ def server_delete_command(arg1, arg2 = ''):
 def server_list_command(arg1 = ''):
     # arg1 => executed command
 
-    instaces = parse_instances('instance2imageflavor')
+    instaces = parse_instances()
     for key in instances.keys():
         if arg1:
             print key + ' ' + instances[key]['image'] + ' ' + instances[key]['flavor']
-    log(arg1, 'SUCCESS\n')
+    log(arg1, 'SUCCESS\n' ,'')

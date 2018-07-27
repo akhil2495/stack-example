@@ -16,7 +16,7 @@ def config_command(arg1, arg2, arg3 = ''):
             dest_path = os.path.join(directory, '../hdwr-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
-            log(arg3, 'SUCCESS\n')
+            log(arg3, 'SUCCESS\n', '')
         else:
             ERR_MSG = "ERROR : Specified file does not exist"
             log(arg3, 'FAILURE\n', ERR_MSG)
@@ -27,7 +27,7 @@ def config_command(arg1, arg2, arg3 = ''):
             dest_path = os.path.join(directory, '../image-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
-            log(arg3, 'SUCCESS\n')
+            log(arg3, 'SUCCESS\n', '')
         else:
             ERR_MSG = "ERROR : Specified file does not exist"
             log(arg3, 'FAILURE\n', ERR_MSG)
@@ -38,7 +38,7 @@ def config_command(arg1, arg2, arg3 = ''):
             dest_path = os.path.join(directory, '../flavor-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
-            log(arg3, 'SUCCESS\n')
+            log(arg3, 'SUCCESS\n', '')
         else:
             ERR_MSG = "ERROR : Specified file does not exist" 
             log(arg3, 'FAILURE\n', ERR_MSG)

@@ -11,6 +11,7 @@ Usage:
   aggiestack show all
   aggiestack admin show hardware
   aggiestack admin can_host <machine_name> <flavor>
+  aggiestack admin show instances
   aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
   aggiestack server delete <instance_name>
   aggiestack server list
@@ -25,6 +26,7 @@ Examples:
   aggiestack show all
   aggiestack admin show hardware
   aggiestack admin can_host <machine_name> <flavor>
+  aggiestack admin show instances
   aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
   aggiestack server delete <instance_name>
   aggiestack server list
@@ -35,15 +37,13 @@ Help:
 
 from commands.config import config_command
 from commands.show import show_command
-from commands.config import config_log
-from commands.show import show_log
+from commands.helpers import log
 from commands.admin import admin_show_command
-from commands.admin import admin_log
 from commands.admin import admin_can_host_command
-from commands.server import server_log
+from commands.admin import admin_show_instances_command
 from commands.server import server_create_command
 from commands.server import server_delete_command
-from commands.server import server_list_command 
+from commands.server import server_list_command
 from docopt import docopt
 import sys
 import os
@@ -62,11 +62,12 @@ def check_command():
     ]
     admin_list = [
         'admin show hardware ',
-        'admin can_host '
+        'admin can_host ',
+        'admin show instances '
     ]
     server_list = [
-        'server create --image '
-        'server delete '
+        'server create --image ',
+        'server delete ',
         'server list '
     ]
     check = ''
@@ -185,6 +186,8 @@ def main():
             if options['show'] == True:
                 if options['hardware'] == True:
                     admin_show_command(executed_command())
+                elif options['instances'] == True:
+                    admin_show_instances_command(executed_command())
 
             elif options['can_host'] == True:
                 if options['<machine_name>']:

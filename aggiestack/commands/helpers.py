@@ -30,6 +30,7 @@ def parse_hardware(arg = ''):
     if os.path.isfile(path):
         with open(path) as file_handle:
             i = 0
+            j = 0
             for line in file_handle:
                 if i == 0:
                     hardware['nracks'] = line.rstrip()
@@ -39,11 +40,25 @@ def parse_hardware(arg = ''):
                         line = line.rstrip()
                         words = line.split()
                         rack[words[0]] = words[1]
+                        nracks -= 1
                     else:
-                        line = line.rstrip()
-                        words = line.split()
-                        server[words[0]] = {'rack': words[1],'ip': words[2], 'mem': int(words[3]), 'ndisks': int(words[4]), 'vcpus': int(words[5])}
+                        if j == 0:
+                            hardware['nservers'] = line.rstrip()
+                            nservers = int(line.rstrip())
+                        else:
+                            line = line.rstrip()
+                            words = line.split()
+                            server[words[0]] = {'rack': words[1], 'ip': words[2], 'mem': int(words[3]), 'ndisks': int(words[4]), 'vcpus': int(words[5])}
+                        j += 1
                 i += 1
+    else:
+        if arg == '':
+            print 'ERROR: The hardware configuration is not yet done'
+            return {}
+        else:
+            hardware = parse_hardware('')
+            update_hardware(hardware['server'], hardware['rack'])
+            return hardware
     hardware = {'server': server, 'rack': rack}
     return hardware
 
@@ -51,13 +66,13 @@ def update_hardware(hardware, racks):
     directory = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(directory, '../server-config.txt')
     with open(path, 'w') as file_handle:
-        file_handle.write(str(len(racks.keys())))
+        file_handle.write(str(len(racks.keys())) + '\n')
         for key in racks.keys():
-            file_handle.write(key + ' ' + racks[key])
-        file_handle.write(str(len(hardware.keys())))
-        current = hardware[key]
+            file_handle.write(key + ' ' + racks[key] + '\n')
+        file_handle.write(str(len(hardware.keys())) + '\n')
         for key in hardware.keys():
-            file_handle.write(key + ' ' + current['rack']  + current['ip'] + ' ' + current['mem'] + ' ' + current['ndisks'] + ' ' + current['vcpus'])
+            current = hardware[key]
+            file_handle.write(key + ' ' + current['rack'] + ' ' + current['ip'] + ' ' + str(current['mem']) + ' ' + str(current['ndisks']) + ' ' + str(current['vcpus']) + '\n')
     return
 
 def parse_flavors():
@@ -90,13 +105,11 @@ def parse_images():
                 i += 1
     return image
 
-def parse_instances(arg):
-    # arg can be 'instance2imageflavor' or 'server2instance'
+def parse_instances():
     
     directory = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(directory, '../instance-config.txt')
     instance = dict()
-    server = dict()
     if os.path.isfile(path):
         with open(path) as file_handle:
             i = 0
@@ -105,25 +118,19 @@ def parse_instances(arg):
                 if i > 0:
                     line = line.rstrip()
                     words = line.split()
-                    if arg == 'instance2imageflavor':
-                        temp['server'] = words[1]
-                        temp['image'] = words[2]
-                        temp['flavor'] = words[3]
-                        instance[words[0]] = temp
-                    elif arg == 'server2instance':
-                        server[words[1]] = words[0]
-    if arg == 'instance2imageflavor':
-        return instance
-    elif arg == 'server2instance':
-        return server
+                    temp['server'] = words[1]
+                    temp['image'] = words[2]
+                    temp['flavor'] = words[3]
+                    instance[words[0]] = temp
+                i += 1
+    return instance
 
 def update_instances(instances):
     directory = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(directory, '../instance-config.txt')
     
-    if os.path.isfile(path):
-        with open(path, 'w') as file_handle:
-            f.write(str(len(instances.keys())))
-            for key in instances.keys():
-                f.write(key + ' ' + instances[key]['server'] + instances[key]['image'] + ' ' + instances[key]['flavor'])
+    with open(path, 'w') as file_handle:
+        file_handle.write(str(len(instances.keys())) + '\n')
+        for key in instances.keys():
+            file_handle.write(key + ' ' + instances[key]['server'] + ' ' +  instances[key]['image'] + ' ' + instances[key]['flavor'] + '\n')
     return True
