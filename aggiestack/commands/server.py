@@ -38,17 +38,11 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
             # search for a server (verify if it can_host)
             hardware = parse_hardware('current')
             servers = hardware['server']
-            instances = parse_instances('server2instance')
             flavors = parse_flavors()
             
-            available_servers = []
-            for server in servers.keys():
-                if server not in instances.keys():
-                    available_servers.append(server)
-
             runnable_servers = []
-            for server in available_servers:
-                if admin_can_host_command(server, instances[arg3]['flavor'], executed_command)
+            for server in servers.keys():
+                if admin_can_host_command(server, arg2, executed_command):
                     runnable_servers.append(server)
             
             # re do a sophisticated strategy for choosing server
@@ -59,7 +53,7 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
                 print 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
                 return
             
-            instances[arg3]['server'] = server
+            instances[arg3]['server'] = servers[server]
             updated = update_instances(instances)
             
             # update server config file
