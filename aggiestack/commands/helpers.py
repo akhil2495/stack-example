@@ -12,32 +12,46 @@ def log(arg1, arg2):
                 file_handle.write(arg)
 
 def parse_hardware(arg = ''):
-    # arg can be 'actual' or 'current'
+    # arg can be '' or 'current'
     directory = os.path.dirname(os.path.realpath(__file__))
     if arg == '':
         path = os.path.join(directory, '../hdwr-config.txt')
     elif arg == 'current':
         path = os.path.join(directory, '../server-config.txt')
     hardware = dict()
+    rack = dict()
+    server = dict()
     if os.path.isfile(path):
         with open(path) as file_handle:
             i = 0
             for line in file_handle:
+                if i == 0:
+                    hardware['nracks'] = line.rstrip()
+                    nracks = int(line.rstrip())
                 if i > 0:
-                    line = line.rstrip()
-                    words = line.split()
-                    hardware[words[0]] = {'ip': words[1], 'mem': int(words[2]), 'ndisks': int(words[3]), 'vcpus': int(words[4])}
+                    if nracks > 0:
+                        line = line.rstrip()
+                        words = line.split()
+                        rack[words[0]] = words[1]
+                    else:
+                        line = line.rstrip()
+                        words = line.split()
+                        server[words[0]] = {'rack': words[1],'ip': words[2], 'mem': int(words[3]), 'ndisks': int(words[4]), 'vcpus': int(words[5])}
                 i += 1
+    hardware = {'server': server, 'rack': rack}
     return hardware
 
-def update_hardware(hardware):
+def update_hardware(hardware, racks):
     directory = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(directory, '../server-config.txt')
     with open(path, 'w') as file_handle:
+        file_handle.write(str(len(racks.keys())))
+        for key in racks.keys():
+            file_handle.write(key + ' ' + racks[key])
         file_handle.write(str(len(hardware.keys())))
         current = hardware[key]
         for key in hardware.keys():
-            file_handle.write(key + ' ' + current['ip'] + ' ' + current['mem'] + ' ' + current['ndisks'] + ' ' + current['vcpus'])
+            file_handle.write(key + ' ' + current['rack']  + current['ip'] + ' ' + current['mem'] + ' ' + current['ndisks'] + ' ' + current['vcpus'])
     return
 
 def parse_flavors():
@@ -86,6 +100,7 @@ def parse_instances(arg):
                     line = line.rstrip()
                     words = line.split()
                     if arg == 'instance2imageflavor':
+                        temp['server'] = words[1]
                         temp['image'] = words[2]
                         temp['flavor'] = words[3]
                         instance[words[0]] = temp

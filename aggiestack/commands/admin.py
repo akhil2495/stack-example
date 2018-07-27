@@ -69,3 +69,43 @@ def admin_show_instances(arg = ''):
     else:
         print 'INFO : No instances running currently'
     log(arg, 'SUCCESS\n')
+
+def admin_evacuate(arg1, arg2):
+    # arg1 : The rack name
+    # arg2 : executed command
+
+    # change the server configuration file
+    deleted_servers = []
+    hardware = parse_hardware('current')
+    hardware['rack'].pop(arg1)
+    for key in hardware['server'].keys():
+        if hardware['server'][key]['rack'] == arg1:
+            deleted_servers.append(key)
+            hardware['server'].pop(key)
+    update_hardware(hardware['server'], hardware['rack'])
+
+    # store all instances on this rack
+    instances = parse_instances('instance2imageflavor')
+
+    # instances running in the rack from instance configuration file
+    # add each instance one-by-one by checking
+    for key in instances.keys():
+        if instances[key]['server'] in deleted_servers:
+            image = instances[key]['image']
+            flavor = instances[key]['flavor']
+            instances.pop(key)
+            if create_server_command(image, flavor, key):
+                continue
+            else:
+                print 'ERROR : ' + key + ' cannot be accommodated right now'
+
+    # if something fails give an error/warning/info
+    # update log
+    log(arg2, 'SUCCESS\n')
+
+def admin_remove(arg1, arg2):
+    # arg1 : The server name
+    # arg2 : executed command
+
+    #directory = os.path.dirname(os.path.realpath(__file__))
+    #path = os.path.join(directory, '../') 

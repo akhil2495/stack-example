@@ -36,7 +36,8 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
         if agr2 in flavors:
             instances[arg3] = {'image': arg1, 'flavor': arg2}
             # search for a server (verify if it can_host)
-            servers = parse_hardware('current')
+            hardware = parse_hardware('current')
+            servers = hardware['server']
             instances = parse_instances('server2instance')
             flavors = parse_flavors()
             
@@ -51,7 +52,12 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
                     runnable_servers.append(server)
             
             # re do a sophisticated strategy for choosing server
-            server = runnable_servers[0]
+            if runnable_servers:
+                server = runnable_servers[0]
+            else:
+                log(arg4, 'FAILURE\n')
+                print 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
+                return
             
             instances[arg3]['server'] = server
             updated = update_instances(instances)
@@ -60,7 +66,7 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
             runnable_servers[0]['mem'] -= flavors[instances[arg3]['flavor']]['mem']
             runnable_servers[0]['ndisks'] -= flavors[instances[arg3]['flavor']]['ndisks']
             runnable_servers[0]['vcpus'] -= flavors[instances[arg3]['flavor']]['vcpus']
-            update_hardware(runnable_servers)
+            update_hardware(runnable_servers, hardware['rack'])
             log(arg4, 'SUCCESS\n')
         else:
             log(arg4, 'FAILURE\n')
@@ -76,13 +82,14 @@ def server_delete_command(arg1, arg2 = ''):
     # delete instance
     instances = parse_instances('instance2imageflavor')
     if instances.has_key(arg1):
-        servers = parse_hardware('current')
+        hardware = parse_hardware('current')
+        servers = hardware['server']
         servers['mem'] += flavors[instances[arg1]['flavor']]['mem']
         servers['ndisks'] += flavors[instances[arg1]['flavor']]['ndisks']
         servers['vcpus'] += flavors[instances[arg1]['flavor']]['vcpus']
         instances.pop(arg1, None)
         updated = update_instances(instances)
-        update_hardware(servers)
+        update_hardware(servers, hardware['rack'])
         log(arg2, 'SUCCESS\n')
     else:
         log(arg2, 'FAILURE\n')
