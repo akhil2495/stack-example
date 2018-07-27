@@ -11,9 +11,13 @@ def log(arg1, arg2):
             with open(path, 'w') as file_handle:
                 file_handle.write(arg)
 
-def parse_hardware():
+def parse_hardware(arg = ''):
+    # arg can be 'actual' or 'current'
     directory = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(directory, '../hdwr-config.txt')
+    if arg == '':
+        path = os.path.join(directory, '../hdwr-config.txt')
+    elif arg == 'current':
+        path = os.path.join(directory, '../server-config.txt')
     hardware = dict()
     if os.path.isfile(path):
         with open(path) as file_handle:
@@ -25,6 +29,16 @@ def parse_hardware():
                     hardware[words[0]] = {'ip': words[1], 'mem': int(words[2]), 'ndisks': int(words[3]), 'vcpus': int(words[4])}
                 i += 1
     return hardware
+
+def update_hardware(hardware):
+    directory = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(directory, '../server-config.txt')
+    with open(path, 'w') as file_handle:
+        file_handle.write(str(len(hardware.keys())))
+        current = hardware[key]
+        for key in hardware.keys():
+            file_handle.write(key + ' ' + current['ip'] + ' ' + current['mem'] + ' ' + current['ndisks'] + ' ' + current['vcpus'])
+    return
 
 def parse_flavors():
     directory = os.path.dirname(os.path.realpath(__file__))
