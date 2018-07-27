@@ -12,6 +12,7 @@ Usage:
   aggiestack admin show hardware
   aggiestack admin can_host <machine_name> <flavor>
   aggiestack admin show instances
+  aggiestack admin evacuate <rack_name>
   aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
   aggiestack server delete <instance_name>
   aggiestack server list
@@ -27,6 +28,7 @@ Examples:
   aggiestack admin show hardware
   aggiestack admin can_host <machine_name> <flavor>
   aggiestack admin show instances
+  aggiestack admin evacuate <rack_name>
   aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
   aggiestack server delete <instance_name>
   aggiestack server list
@@ -44,6 +46,7 @@ from commands.admin import admin_show_instances_command
 from commands.server import server_create_command
 from commands.server import server_delete_command
 from commands.server import server_list_command
+from commands.admin import admin_evacuate_command
 from docopt import docopt
 import sys
 import os
@@ -63,7 +66,8 @@ def check_command():
     admin_list = [
         'admin show hardware ',
         'admin can_host ',
-        'admin show instances '
+        'admin show instances ',
+        'admin evacuate '
     ]
     server_list = [
         'server create --image ',
@@ -90,8 +94,12 @@ def check_command():
 
     elif sys.argv[1] == 'admin':
         if len(sys.argv) == 4:
-            for i in range(len(sys.argv) - 1):
-                check += sys.argv[i+1] + " "
+            if sys.argv[2] != 'evacuate':
+                for i in range(len(sys.argv) - 1):
+                    check += sys.argv[i+1] + " "
+            else:
+                for i in range(len(sys.argv) - 2):
+                    check += sys.argv[i+1] + " "
             if check not in admin_list:
                 wrong_cmd_flag = True
         elif len(sys.argv) == 5:
@@ -193,6 +201,10 @@ def main():
                 if options['<machine_name>']:
                     if options['<flavor>']:
                         admin_can_host_command(options['<machine_name>'], options['<flavor>'], executed_command())
+
+            elif options['evacuate'] == True:
+                if options['<rack_name>']:
+                    admin_evacuate_command(options['<rack_name>'], executed_command())
 
     # for server commands
     if sys.argv[1] == 'server':

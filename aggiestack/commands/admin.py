@@ -3,6 +3,7 @@ from helpers import parse_flavors
 from helpers import parse_hardware
 from helpers import log
 from helpers import parse_instances
+from helpers import update_hardware
 
 def admin_show_command(arg = ''):
     # arg : executed command
