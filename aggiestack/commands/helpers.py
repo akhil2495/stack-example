@@ -1,15 +1,21 @@
 import os
 
-def log(arg1, arg2):
+def log(arg1, arg2, arg3):
+    # arg1 : executed command (or) indication of internal function call
+    # arg2 : SUCCESS (or) FAILURE
+    # arg3 : Message to print on screen
+
     if arg1:
         directory = os.path.dirname(os.path.realpath(__file__))
         path = os.path.join(directory, '../aggiestack-log.txt')
         if os.path.isfile(path):
             with open(path, 'a') as file_handle:
-                file_handle.write(arg)
+                file_handle.write(arg1 + arg2)
+                print arg3
         else:
             with open(path, 'w') as file_handle:
-                file_handle.write(arg)
+                file_handle.write(arg1 + arg2)
+                print arg3
 
 def parse_hardware(arg = ''):
     # arg can be '' or 'current'

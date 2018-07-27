@@ -18,8 +18,8 @@ def config_command(arg1, arg2, arg3 = ''):
                 copyfile(src_path, dest_path)
             log(arg3, 'SUCCESS\n')
         else:
-            print "ERROR : Specified file does not exist"
-            log(arg3, 'FAILURE\n')
+            ERR_MSG = "ERROR : Specified file does not exist"
+            log(arg3, 'FAILURE\n', ERR_MSG)
 
     elif arg1 == 'images':
         # check if command is successful or not
@@ -29,8 +29,8 @@ def config_command(arg1, arg2, arg3 = ''):
                 copyfile(src_path, dest_path)
             log(arg3, 'SUCCESS\n')
         else:
-            print "ERROR : Specified file does not exist"
-            log(arg3, 'FAILURE\n')
+            ERR_MSG = "ERROR : Specified file does not exist"
+            log(arg3, 'FAILURE\n', ERR_MSG)
 
     elif arg1 == 'flavors':
         # check if command is successful or not
@@ -40,5 +40,5 @@ def config_command(arg1, arg2, arg3 = ''):
                 copyfile(src_path, dest_path)
             log(arg3, 'SUCCESS\n')
         else:
-            print "ERROR : Specified file does not exist" 
-            log(arg3, 'FAILURE\n')
+            ERR_MSG = "ERROR : Specified file does not exist" 
+            log(arg3, 'FAILURE\n', ERR_MSG)

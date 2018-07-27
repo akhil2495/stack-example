@@ -13,8 +13,8 @@ def admin_show_command(arg = ''):
             print file_handle.read()
         log(arg, 'SUCCESS\n')
     else:
-        print 'ERROR : Hardware information not yet configured'
-        log(arg, 'FAILURE\n')
+        ERR_MSG = 'ERROR : Hardware information not yet configured'
+        log(arg, 'FAILURE\n', ERR_MSG)
 
 def admin_can_host_command(arg1, arg2, arg3 = ''):
     # arg1 : name of the hardware
@@ -25,36 +25,30 @@ def admin_can_host_command(arg1, arg2, arg3 = ''):
     hardware = parse_hardware('current')
 
     if arg2 not in flavors.keys():
-        if arg3:
-            print 'ERROR : Wrong flavor name'
-        log(arg3, 'FAILURE\n')
+        ERR_MSG = 'ERROR : Wrong flavor name'
+        log(arg3, 'FAILURE\n', ERR_MSG)
         return False
     if arg1 not in hardware.keys():
-        if arg3:
-            print 'ERROR : Wrong hardware name'
-        log(arg3, 'FAILURE\n')
+        ERR_MSG = 'ERROR : Wrong hardware name'
+        log(arg3, 'FAILURE\n', ERR_MSG)
         return False
 
     # checking if the machine name is in the hardware file and if the flavor can fit
     if flavors[arg2]['mem'] > hardware[arg1]['mem']:
-        if arg3:
-            print 'ERROR : Memory insufficient'
-        log(arg3, 'FAILURE\n')
+        ERR_MSG = 'ERROR : Memory insufficient'
+        log(arg3, 'FAILURE\n', ERR_MSG)
         return False
     elif flavors[arg2]['ndisks'] > hardware[arg1]['ndisks']:
-        if arg3:
-            print 'ERROR : Not sufficient disks'
-        log(arg3, 'FAILURE\n')
+        ERR_MSG = 'ERROR : Not sufficient disks'
+        log(arg3, 'FAILURE\n', ERR_MSG)
         return False
     elif flavors[arg2]['vcpus'] > hardware[arg1]['vcpus']:
-        if arg3:
-            print 'ERROR : Not sufficient cpus'
-        log(arg3, 'FAILURE\n')
+        ERR_MSG = 'ERROR : Not sufficient cpus'
+        log(arg3, 'FAILURE\n', ERR_MSG)
         return False
     else:
-        if arg3:
-            print 'yes'
-        log(arg3, 'SUCCESS\n')
+        MSG = 'yes'
+        log(arg3, 'SUCCESS\n', MSG)
         return True
 
 def admin_show_instances(arg = ''):
@@ -66,9 +60,10 @@ def admin_show_instances(arg = ''):
     if instances:
         with open(path) as file_handle:
             print file_handle.read()
+        log(arg, 'SUCCESS\n')
     else:
-        print 'INFO : No instances running currently'
-    log(arg, 'SUCCESS\n')
+        INFO_MSG = 'INFO : No instances running currently'
+        log(arg, 'SUCCESS\n', INFO_MSG)
 
 def admin_evacuate(arg1, arg2):
     # arg1 : The rack name
@@ -97,13 +92,14 @@ def admin_evacuate(arg1, arg2):
             if create_server_command(image, flavor, key):
                 continue
             else:
-                print 'ERROR : ' + key + ' cannot be accommodated right now'
+                if arg2:
+                    print 'ERROR : ' + key + ' cannot be accommodated right now'
 
     # if something fails give an error/warning/info
     # update log
     log(arg2, 'SUCCESS\n')
 
-def admin_remove(arg1, arg2):
+#def admin_remove(arg1, arg2):
     # arg1 : The server name
     # arg2 : executed command
 

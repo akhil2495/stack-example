@@ -49,8 +49,8 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
             if runnable_servers:
                 server = runnable_servers[0]
             else:
-                log(arg4, 'FAILURE\n')
-                print 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
+                ERR_MSG = 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
+                log(arg4, 'FAILURE\n', ERR_MSG)
                 return
             
             instances[arg3]['server'] = servers[server]
@@ -63,11 +63,11 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
             update_hardware(runnable_servers, hardware['rack'])
             log(arg4, 'SUCCESS\n')
         else:
-            log(arg4, 'FAILURE\n')
-            print 'ERROR: specified wrong flavor name'
+            ERR_MSG = 'ERROR: specified wrong flavor name'
+            log(arg4, 'FAILURE\n', ERR_MSG)
     else:
-        log(arg4, 'FAILURE\n')
-        print 'ERROR: specified wrong image name'
+        ERR_MSG = 'ERROR: specified wrong image name'
+        log(arg4, 'FAILURE\n', ERR_MSG)
 
 def server_delete_command(arg1, arg2 = ''):
     # arg1 => INSTANCE_NAME
@@ -86,13 +86,14 @@ def server_delete_command(arg1, arg2 = ''):
         update_hardware(servers, hardware['rack'])
         log(arg2, 'SUCCESS\n')
     else:
-        log(arg2, 'FAILURE\n')
-        print 'ERROR: specified instance name does not exist'
+        ERR_MSG = 'ERROR: specified instance name does not exist'
+        log(arg2, 'FAILURE\n', ERR_MSG)
 
 def server_list_command(arg1 = ''):
     # arg1 => executed command
 
     instaces = parse_instances('instance2imageflavor')
     for key in instances.keys():
-        print key + ' ' + instances[key]['image'] + ' ' + instances[key]['flavor']
+        if arg1:
+            print key + ' ' + instances[key]['image'] + ' ' + instances[key]['flavor']
     log(arg1, 'SUCCESS\n')
