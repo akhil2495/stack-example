@@ -7,7 +7,7 @@ def admin_show_command(arg = ''):
     # arg : executed command
 
     directory = os.path.dirname(os.path.realpath(__file__)) 
-    path = os.path.join(directory, '../hdwr-config.txt')
+    path = os.path.join(directory, '../server-config.txt')
     if os.path.isfile(path):
         with open(path) as file_handle:
             print file_handle.read()
@@ -22,7 +22,7 @@ def admin_can_host_command(arg1, arg2, arg3 = ''):
     # arg3 : executed command
 
     flavors = parse_flavors()
-    hardware = parse_hardware()
+    hardware = parse_hardware('current')
 
     if arg2 not in flavors.keys():
         if arg3:
@@ -56,3 +56,16 @@ def admin_can_host_command(arg1, arg2, arg3 = ''):
             print 'yes'
         log(arg3, 'SUCCESS\n')
         return True
+
+def admin_show_instances(arg = ''):
+    # arg : executed command
+
+    directory = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(directory, '../instance-config.txt')
+    instances = parse_instances()
+    if instances:
+        with open(path) as file_handle:
+            print file_handle.read()
+    else:
+        print 'INFO : No instances running currently'
+    log(arg, 'SUCCESS\n')
