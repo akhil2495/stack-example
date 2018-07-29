@@ -102,16 +102,14 @@ def check_command():
 
     elif sys.argv[1] == 'admin':
         if len(sys.argv) == 4:
-            if sys.argv[2] != 'evacuate':
-                for i in range(len(sys.argv) - 1):
-                    check += sys.argv[i+1] + " "
-            elif sys.argv[2] != 'remove':
-                for i in range(len(sys.argv) - 1):
-                    check += sys.argv[i+1] + " "
-            else:
+            if sys.argv[2] == 'evacuate' or sys.argv[2] == 'remove':
                 for i in range(len(sys.argv) - 2):
                     check += sys.argv[i+1] + " "
+            else:
+                for i in range(len(sys.argv) - 1):
+                    check += sys.argv[i+1] + " "
             if check not in admin_list:
+                print check
                 wrong_cmd_flag = True
         elif len(sys.argv) == 5:
             for i in range(len(sys.argv) - 3):
@@ -121,7 +119,7 @@ def check_command():
         elif len(sys.argv) == 14:
             for i in range(3):
                 check += sys.argv[i+1] + " "
-            if sys.argv[3] != '--mem' || sys.argv[5] != '--disk' || sys.argv[7] != '--vcpus' || sys.argv[9] != '--ip' || sys.argv[11] != '--rack':
+            if sys.argv[3] != '--mem' or sys.argv[5] != '--disk' or sys.argv[7] != '--vcpus' or sys.argv[9] != '--ip' or sys.argv[11] != '--rack':
                 wrong_cmd_flag = True
             if check not in admin_list:
                 wrong_cmd_flag = True
@@ -178,6 +176,8 @@ def main():
         else:
             with open(os.path.join(dirname, 'aggiestack-log.txt'), 'w') as file_handle:
                 file_handle.write(executed_command() + 'FAILURE\n')
+        options = docopt(__doc__, version='0.1')
+        return
 
     options = docopt(__doc__, version='0.1')
 

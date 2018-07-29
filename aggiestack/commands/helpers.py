@@ -16,6 +16,7 @@ def log(arg1, arg2, arg3):
             with open(path, 'w') as file_handle:
                 file_handle.write(arg1 + arg2)
                 print arg3
+    return
 
 def parse_hardware(arg = ''):
     # arg can be '' or 'current'
@@ -31,22 +32,22 @@ def parse_hardware(arg = ''):
         with open(path) as file_handle:
             i = 0
             j = 0
-            for line in file_handle:
+            for lines in file_handle:
                 if i == 0:
-                    hardware['nracks'] = line.rstrip()
-                    nracks = int(line.rstrip())
+                    hardware['nracks'] = lines.rstrip()
+                    nracks = int(lines.rstrip())
                 if i > 0:
                     if nracks > 0:
-                        line = line.rstrip()
+                        line = lines.rstrip()
                         words = line.split()
                         rack[words[0]] = words[1]
                         nracks -= 1
                     else:
                         if j == 0:
                             hardware['nservers'] = line.rstrip()
-                            nservers = int(line.rstrip())
+                            nservers = int(lines.rstrip())
                         else:
-                            line = line.rstrip()
+                            line = lines.rstrip()
                             words = line.split()
                             server[words[0]] = {'rack': words[1], 'ip': words[2], 'mem': int(words[3]), 'ndisks': int(words[4]), 'vcpus': int(words[5])}
                         j += 1
@@ -82,9 +83,9 @@ def parse_flavors():
     if os.path.isfile(path):
         with open(path) as file_handle:
             i = 0
-            for line in file_handle:
+            for lines in file_handle:
                 if i > 0:
-                    line = line.rstrip()
+                    line = lines.rstrip()
                     words = line.split()
                     flavors[words[0]] = {'mem': int(words[1]), 'ndisks': int(words[2]), 'vcpus': int(words[3])}
                 i += 1
@@ -97,9 +98,9 @@ def parse_images():
     if os.path.isfile(path):
         with open(path) as file_handle:
             i = 0
-            for line in file_handle:
+            for lines in file_handle:
                 if i > 0:
-                    line = line.rstrip()
+                    line = lines.rstrip()
                     words = line.split()
                     image[words[0]] = {'image_name': words[0], 'image_path': words[1]}
                 i += 1
@@ -113,10 +114,10 @@ def parse_instances():
     if os.path.isfile(path):
         with open(path) as file_handle:
             i = 0
-            temp = dict()
-            for line in file_handle:
+            for lines in file_handle:
+                temp = dict()
                 if i > 0:
-                    line = line.rstrip()
+                    line = lines.rstrip()
                     words = line.split()
                     temp['server'] = words[1]
                     temp['image'] = words[2]

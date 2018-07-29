@@ -4,9 +4,12 @@ from helpers import parse_hardware
 from helpers import log
 from helpers import parse_instances
 from helpers import update_hardware
+from server import server_create_command
+from helpers import update_instances
 
 def admin_show_command(arg = ''):
     # arg : executed command
+    # this is a common command and needs to be changed from common.py as well
 
     directory = os.path.dirname(os.path.realpath(__file__)) 
     path = os.path.join(directory, '../server-config.txt')
@@ -75,7 +78,12 @@ def admin_evacuate_command(arg1, arg2):
     # change the server configuration file
     deleted_servers = []
     hardware = parse_hardware('current')
-    hardware['rack'].pop(arg1)
+    if hardware['rack'].has_key(arg1):
+        hardware['rack'].pop(arg1)
+    else:
+        ERR_MSG = "ERROR: " + arg1 + " is not a rack"
+        log(arg2, "FAILURE\n", ERR_MSG)
+        return
     for key in hardware['server'].keys():
         if hardware['server'][key]['rack'] == arg1:
             deleted_servers.append(key)
@@ -92,15 +100,17 @@ def admin_evacuate_command(arg1, arg2):
             image = instances[key]['image']
             flavor = instances[key]['flavor']
             instances.pop(key)
-            if create_server_command(image, flavor, key):
+            updated = update_instances(instances)
+            if server_create_command(image, flavor, key):
                 continue
             else:
                 if arg2:
+                    # can also store them into a file that can be run after a while
                     print 'ERROR: ' + key + ' cannot be accommodated right now'
 
     # if something fails give an error/warning/info
     # update log
-    log(arg2, 'SUCCESS\n', arg2)
+    log(arg2, 'SUCCESS\n', '')
 
 def admin_remove_command(arg1, arg2):
     # arg1 : The server name
@@ -108,27 +118,35 @@ def admin_remove_command(arg1, arg2):
 
     # change server configuration file
     hardware = parse_hardware('current')
-    hardware['server'].pop(arg1)
+    if hardware['server'].has_key(arg1):
+        hardware['server'].pop(arg1)
+    else:
+        ERR_MSG = "ERROR: " + arg1 + " is not a server"
+        log(arg2, "FAILURE\n", ERR_MSG)
+        return
     update_hardware(hardware['server'], hardware['rack'])
-
+    
     # store all instances on this machine
     instances = parse_instances()
+    print instances
 
     # add each instance one-by-one by checking
     for key in instances.keys():
-        if instances[key]['server'] == deleted_server:
+        if instances[key]['server'] == arg1:
             image = instances[key]['image']
             flavor = instances[key]['flavor']
             instances.pop(key)
-            if create_server_command(image, flavor, key):
+            updated = update_instances(instances)
+            if server_create_command(image, flavor, key, ''):
                 continue
             else:
                 if arg2:
+                    # can also store them into a file which can run later
                     print 'ERROR: ' + key + ' cannot be accommoated right now'
 
     # if something fails give an error/warning/info
     # update log
-    log(arg2, 'SUCCESS\n', arg2)
+    log(arg2, 'SUCCESS\n', '')
 
 def admin_add_command(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
     # arg1 : memory
@@ -141,14 +159,28 @@ def admin_add_command(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
 
     # change server configuration file
     hardware = parse_hardware('current')
-    temp = dict()
-    temp['mem'] = int(arg1)
-    temp['ndisks'] = int(arg2)
-    temp['vcpus'] = int(arg3)
-    temp['ip'] = arg4
-    temp['rack'] = arg5
+    racks = []
+    for key in hardware['rack']:
+        racks.append(key)
+    ips = []
+    for key in hardware['server']:
+        ips.append(hardware['server'][key]['ip'])
+    if arg5 not in racks:
+        if arg4 not in ips:
+            temp = dict()
+            temp['mem'] = int(arg1)
+            temp['ndisks'] = int(arg2)
+            temp['vcpus'] = int(arg3)
+            temp['ip'] = arg4
+            temp['rack'] = arg5
+        else:
+            ERR_MSG = 'ERROR: The ip is already being used'
+            log(arg7, 'FAILURE\n', ERR_MSG)
+    else:
+        ERR_MSG = 'ERROR: The rack specified is under maintenance or does not exist'
+        log(arg7, 'FAILURE\n', ERR_MSG)
     hardware['server'][arg6] = temp
     update_hardware(hardware['server'], hardware['rack'])
     
     # update log
-    log(arg2, 'SUCCESS\n', arg7)
+    log(arg7, 'SUCCESS\n', '')

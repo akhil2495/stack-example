@@ -10,15 +10,14 @@
 
 import os
 from shutil import copyfile
-from admin import parse_hardware
-from admin import parse_flavors
-from admin import admin_can_host_command
+from common import admin_can_host_command
 from helpers import log
 from helpers import parse_images
 from helpers import parse_instances
 from helpers import update_instances
 from helpers import parse_hardware
 from helpers import update_hardware
+from helpers import parse_flavors
 
 def server_create_command(arg1, arg2, arg3, arg4 = ''):
     # arg1 => IMAGE_NAME
@@ -34,7 +33,11 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
     instances = parse_instances()
     if arg1 in images:
         if arg2 in flavors:
-            instances[arg3] = {'image': arg1, 'flavor': arg2}
+            if instances.has_key(arg3):
+                ERR_MSG = 'ERROR: ' + arg3 + ' already exists, choose another instance name'
+                log(arg4, 'FAILURE\n' + ERR_MSG)
+            else:
+                instances[arg3] = {'image': arg1, 'flavor': arg2}
             # search for a server (verify if it can_host)
             hardware = parse_hardware('current')
             servers = hardware['server']
@@ -45,13 +48,13 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
                 if admin_can_host_command(server, arg2, ''):
                     runnable_servers.append(server)
             
-            # re do a sophisticated strategy for choosing server
+            # re-do a sophisticated strategy for choosing server
             if runnable_servers:
                 server = runnable_servers[0]
             else:
                 ERR_MSG = 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
                 log(arg4, 'FAILURE\n', ERR_MSG)
-                return
+                return False
             
             if arg3 not in instances.keys():
                 instances[arg3] = {'image': arg1, 'flavor': arg2, 'server': server}
@@ -65,12 +68,15 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
             servers[server]['vcpus'] -= flavors[instances[arg3]['flavor']]['vcpus']
             update_hardware(servers, hardware['rack'])
             log(arg4, 'SUCCESS\n', '')
+            return True
         else:
             ERR_MSG = 'ERROR: specified wrong flavor name'
             log(arg4, 'FAILURE\n', ERR_MSG)
+            return False
     else:
         ERR_MSG = 'ERROR: specified wrong image name'
         log(arg4, 'FAILURE\n', ERR_MSG)
+        return False
 
 def server_delete_command(arg1, arg2 = ''):
     # arg1 => INSTANCE_NAME
