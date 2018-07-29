@@ -96,15 +96,59 @@ def admin_evacuate_command(arg1, arg2):
                 continue
             else:
                 if arg2:
-                    print 'ERROR : ' + key + ' cannot be accommodated right now'
+                    print 'ERROR: ' + key + ' cannot be accommodated right now'
 
     # if something fails give an error/warning/info
     # update log
-    log(arg2, 'SUCCESS\n', '')
+    log(arg2, 'SUCCESS\n', arg2)
 
-#def admin_remove(arg1, arg2):
+def admin_remove_command(arg1, arg2):
     # arg1 : The server name
     # arg2 : executed command
 
-    #directory = os.path.dirname(os.path.realpath(__file__))
-    #path = os.path.join(directory, '../') 
+    # change server configuration file
+    hardware = parse_hardware('current')
+    hardware['server'].pop(arg1)
+    update_hardware(hardware['server'], hardware['rack'])
+
+    # store all instances on this machine
+    instances = parse_instances()
+
+    # add each instance one-by-one by checking
+    for key in instances.keys():
+        if instances[key]['server'] == deleted_server:
+            image = instances[key]['image']
+            flavor = instances[key]['flavor']
+            instances.pop(key)
+            if create_server_command(image, flavor, key):
+                continue
+            else:
+                if arg2:
+                    print 'ERROR: ' + key + ' cannot be accommoated right now'
+
+    # if something fails give an error/warning/info
+    # update log
+    log(arg2, 'SUCCESS\n', arg2)
+
+def admin_add_command(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
+    # arg1 : memory
+    # arg2 : num of disks
+    # arg3 : num of virtual cpus
+    # arg4 : ip
+    # arg5 : rack name
+    # arg6 : server name
+    # arg7 : executed command
+
+    # change server configuration file
+    hardware = parse_hardware('current')
+    temp = dict()
+    temp['mem'] = int(arg1)
+    temp['ndisks'] = int(arg2)
+    temp['vcpus'] = int(arg3)
+    temp['ip'] = arg4
+    temp['rack'] = arg5
+    hardware['server'][arg6] = temp
+    update_hardware(hardware['server'], hardware['rack'])
+    
+    # update log
+    log(arg2, 'SUCCESS\n', arg7)

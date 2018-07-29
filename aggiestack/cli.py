@@ -13,6 +13,8 @@ Usage:
   aggiestack admin can_host <machine_name> <flavor>
   aggiestack admin show instances
   aggiestack admin evacuate <rack_name>
+  aggiestack admin remove <server_name>
+  aggiestack admin add --mem <nmem> --disk <ndisk> --vcpus <nvcpu> --ip <ip> --rack <rack_name> <server_name>
   aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
   aggiestack server delete <instance_name>
   aggiestack server list
@@ -29,6 +31,8 @@ Examples:
   aggiestack admin can_host <machine_name> <flavor>
   aggiestack admin show instances
   aggiestack admin evacuate <rack_name>
+  aggiestack admin remove <server_name>
+  aggiestack admin add --mem <nmem> --disk <ndisk> --vcpus <nvcpu> --ip <ip> --rack <rack_name> <server_name>
   aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
   aggiestack server delete <instance_name>
   aggiestack server list
@@ -47,6 +51,8 @@ from commands.server import server_create_command
 from commands.server import server_delete_command
 from commands.server import server_list_command
 from commands.admin import admin_evacuate_command
+from commands.admin import admin_remove_command
+from commands.admin import admin_add_command
 from docopt import docopt
 import sys
 import os
@@ -67,7 +73,9 @@ def check_command():
         'admin show hardware ',
         'admin can_host ',
         'admin show instances ',
-        'admin evacuate '
+        'admin evacuate ',
+        'admin remove ',
+        'admin add --mem '
     ]
     server_list = [
         'server create --image ',
@@ -97,6 +105,9 @@ def check_command():
             if sys.argv[2] != 'evacuate':
                 for i in range(len(sys.argv) - 1):
                     check += sys.argv[i+1] + " "
+            elif sys.argv[2] != 'remove':
+                for i in range(len(sys.argv) - 1):
+                    check += sys.argv[i+1] + " "
             else:
                 for i in range(len(sys.argv) - 2):
                     check += sys.argv[i+1] + " "
@@ -105,6 +116,13 @@ def check_command():
         elif len(sys.argv) == 5:
             for i in range(len(sys.argv) - 3):
                 check += sys.argv[i+1] + " "
+            if check not in admin_list:
+                wrong_cmd_flag = True
+        elif len(sys.argv) == 14:
+            for i in range(3):
+                check += sys.argv[i+1] + " "
+            if sys.argv[3] != '--mem' || sys.argv[5] != '--disk' || sys.argv[7] != '--vcpus' || sys.argv[9] != '--ip' || sys.argv[11] != '--rack':
+                wrong_cmd_flag = True
             if check not in admin_list:
                 wrong_cmd_flag = True
         else:
@@ -168,13 +186,19 @@ def main():
         if options['config'] == True:
             if options['--hardware'] == True:
                 if options['<input_file>']:
-                    config_command('hardware', options['<input_file>'], executed_command())
+                    config_command('hardware', 
+                                   options['<input_file>'], 
+                                   executed_command())
             elif options['--images'] == True:
                 if options['<input_file>']:
-                    config_command('images', options['<input_file>'], executed_command())
+                    config_command('images', 
+                                   options['<input_file>'], 
+                                   executed_command())
             elif options['--flavors'] == True:
                 if options['<input_file>']:
-                    config_command('flavors', options['<input_file>'], executed_command())
+                    config_command('flavors', 
+                                   options['<input_file>'], 
+                                   executed_command())
 
     # for show commands
     if sys.argv[1] == 'show':
@@ -200,11 +224,34 @@ def main():
             elif options['can_host'] == True:
                 if options['<machine_name>']:
                     if options['<flavor>']:
-                        admin_can_host_command(options['<machine_name>'], options['<flavor>'], executed_command())
+                        admin_can_host_command(options['<machine_name>'], 
+                                               options['<flavor>'], 
+                                               executed_command())
 
             elif options['evacuate'] == True:
                 if options['<rack_name>']:
-                    admin_evacuate_command(options['<rack_name>'], executed_command())
+                    admin_evacuate_command(options['<rack_name>'], 
+                                           executed_command())
+
+            elif options['remove'] == True:
+                if options['<server_name>']:
+                    admin_remove_command(options['<server_name>'], 
+                                         executed_command())
+   
+            elif options['add'] == True:
+                if options['<nmem>']:
+                    if options['<ndisk>']:
+                        if options['<nvcpu>']:
+                            if options['<ip>']:
+                                if options['<rack_name>']:
+                                    if options['<server_name>']:
+                                        admin_add_command(options['<nmem>'], 
+                                                          options['<ndisk>'], 
+                                                          options['<nvcpu>'], 
+                                                          options['<ip>'], 
+                                                          options['<rack_name>'], 
+                                                          options['<server_name>'],
+                                                          executed_command())
 
     # for server commands
     if sys.argv[1] == 'server':
@@ -215,11 +262,15 @@ def main():
                         if options['--flavor'] == True:
                             if options['<flavor_name>']:
                                 if options['<instance_name>']:
-                                    server_create_command(options['<image_name>'], options['<flavor_name>'], options['<instance_name>'], executed_command())
+                                    server_create_command(options['<image_name>'], 
+                                                          options['<flavor_name>'], 
+                                                          options['<instance_name>'], 
+                                                          executed_command())
 
             elif options['delete'] == True:
                 if options['<instance_name>']:
-                    server_delete_command(options['<instance_name>'], executed_command())
+                    server_delete_command(options['<instance_name>'], 
+                                          executed_command())
 
             elif options['list'] == True:
                 server_list_command(executed_command())
