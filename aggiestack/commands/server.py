@@ -18,6 +18,7 @@ from helpers import update_instances
 from helpers import parse_hardware
 from helpers import update_hardware
 from helpers import parse_flavors
+from placement import placement_algorithm
 
 def server_create_command(arg1, arg2, arg3, arg4 = ''):
     # arg1 => IMAGE_NAME
@@ -38,11 +39,21 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
                 log(arg4, 'FAILURE\n' + ERR_MSG)
             else:
                 instances[arg3] = {'image': arg1, 'flavor': arg2}
+
             # search for a server (verify if it can_host)
             hardware = parse_hardware('current')
             servers = hardware['server']
             flavors = parse_flavors()
-            
+
+            # for part c
+            server = placement_algorithm(arg1, arg2)
+            if server == 'CANT_ACCOMMODATE':
+                ERR_MSG = 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
+                log(arg4, 'FAILURE\n', ERR_MSG)
+            else:
+                log(arg4, 'SUCCESS\n', '')
+
+            # for part a and b
             runnable_servers = []
             for server in servers.keys():
                 if admin_can_host_command(server, arg2, ''):

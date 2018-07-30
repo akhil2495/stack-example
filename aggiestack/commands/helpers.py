@@ -102,9 +102,35 @@ def parse_images():
                 if i > 0:
                     line = lines.rstrip()
                     words = line.split()
-                    image[words[0]] = {'image_name': words[0], 'image_path': words[1]}
+                    image[words[0]] = {'size': int(words[1]), 'path': words[2]}
                 i += 1
     return image
+
+def parse_image_rack():
+    directory = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(directory, '../im2rack-config.txt')
+
+    im2rack = dict()
+    if os.path.isfile(path):
+        with open(path) as file_handle:
+            i = 0
+            for lines in file_handle:
+                line = lines.rstrip()
+                words = line.split()
+                temp = []
+                for i in range(len(words)-1):
+                    temp.append(words[i+1])
+                im2rack[words[0]] = temp
+    return im2rack
+
+def update_image_rack(im2rack):
+    directory = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(directory, '../im2rack-config.txt')
+
+    if os.path.isfile(path):
+        with open(path, 'w') as file_handle:
+            for key in im2rack.keys():
+                file_handle.write(key + ' ' + im2rack[key] + '\n')
 
 def parse_instances():
     

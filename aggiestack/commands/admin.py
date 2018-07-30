@@ -184,3 +184,9 @@ def admin_add_command(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
     
     # update log
     log(arg7, 'SUCCESS\n', '')
+
+def admin_show_imagecaches_command(arg1, arg2):
+    # arg1 : rack name
+    # arg2 : executed command
+
+    `
