@@ -15,6 +15,7 @@ Usage:
   aggiestack admin evacuate <rack_name>
   aggiestack admin remove <server_name>
   aggiestack admin add --mem <nmem> --disk <ndisk> --vcpus <nvcpu> --ip <ip> --rack <rack_name> <server_name>
+  aggiestack admin show imagecaches <rack_name>
   aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
   aggiestack server delete <instance_name>
   aggiestack server list
@@ -33,12 +34,13 @@ Examples:
   aggiestack admin evacuate <rack_name>
   aggiestack admin remove <server_name>
   aggiestack admin add --mem <nmem> --disk <ndisk> --vcpus <nvcpu> --ip <ip> --rack <rack_name> <server_name>
+  aggiestack admin show imagecaches <rack_name>
   aggiestack server create --image <image_name> --flavor <flavor_name> <instance_name>
   aggiestack server delete <instance_name>
   aggiestack server list
 
 Help:
-  Have only two types of commands aggiestack config or aggiestack show
+  
 """
 
 from commands.config import config_command
@@ -53,6 +55,7 @@ from commands.server import server_list_command
 from commands.admin import admin_evacuate_command
 from commands.admin import admin_remove_command
 from commands.admin import admin_add_command
+from commands.admin import admin_show_imagecaches_command
 from docopt import docopt
 import sys
 import os
@@ -75,7 +78,8 @@ def check_command():
         'admin show instances ',
         'admin evacuate ',
         'admin remove ',
-        'admin add --mem '
+        'admin add --mem ',
+        'admin show imagecaches '
     ]
     server_list = [
         'server create --image ',
@@ -112,8 +116,12 @@ def check_command():
                 print check
                 wrong_cmd_flag = True
         elif len(sys.argv) == 5:
-            for i in range(len(sys.argv) - 3):
-                check += sys.argv[i+1] + " "
+            if sys.argv[3] == 'imagecaches':
+                for i in range(len(sys.argv) - 2):
+                    check += sys.argv[i+1] + " "
+            else:
+                for i in range(len(sys.argv) - 3):
+                    check += sys.argv[i+1] + " "
             if check not in admin_list:
                 wrong_cmd_flag = True
         elif len(sys.argv) == 14:
@@ -220,6 +228,10 @@ def main():
                     admin_show_command(executed_command())
                 elif options['instances'] == True:
                     admin_show_instances_command(executed_command())
+                elif options['imagecaches'] == True:
+                    if options['<rack_name>']
+                        admin_show_imagecaches_command(options['<rack_name>'], 
+                                                       executed_command())
 
             elif options['can_host'] == True:
                 if options['<machine_name>']:

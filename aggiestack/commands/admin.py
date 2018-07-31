@@ -189,4 +189,25 @@ def admin_show_imagecaches_command(arg1, arg2):
     # arg1 : rack name
     # arg2 : executed command
 
-    `
+    hardware = parse_hardware('current')
+    im2rack = parse_image_rack()
+    images = parse_images()
+    
+    if arg1 in hardware['rack'].keys():
+        rack2im = dict()
+        for key, val in im2rack.items():
+            for v in val:
+                if rack2im.has_key(v):
+                    rack2im[v].append(key)
+                else:
+                    rack2im[v] = []
+                    rack2im.append(key)
+
+        print 'List of images in ' + arg1 + ':'
+        for image in rack2im[arg1]:
+            print image
+        print 'Space left in storage is ' + str(hardware['rack'][arg1]) + 'MB'
+        log(arg2, 'SUCCESS\n', '')
+    else:
+        ERR_MSG = 'ERROR: Wrong server name specified'
+        log(arg2, 'FAILURE\n', ERR_MSG)
