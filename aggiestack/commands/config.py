@@ -16,6 +16,8 @@ def config_command(arg1, arg2, arg3 = ''):
             dest_path = os.path.join(directory, '../hdwr-config.txt')
             if os.path.normpath(src_path) != os.path.normpath(dest_path):
                 copyfile(src_path, dest_path)
+            dest_path = os.path.join(directory, '../server-config.txt')
+            copyfile(src_path, dest_path)
             log(arg3, 'SUCCESS\n', '')
         else:
             ERR_MSG = "ERROR : Specified file does not exist"

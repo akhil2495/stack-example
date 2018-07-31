@@ -36,7 +36,7 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
         if arg2 in flavors:
             if instances.has_key(arg3):
                 ERR_MSG = 'ERROR: ' + arg3 + ' already exists, choose another instance name'
-                log(arg4, 'FAILURE\n' + ERR_MSG)
+                log(arg4, 'FAILURE\n', ERR_MSG)
             else:
                 instances[arg3] = {'image': arg1, 'flavor': arg2}
 
@@ -46,12 +46,12 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
             flavors = parse_flavors()
 
             # for part c
-            server = placement_algorithm(arg1, arg2)
-            if server == 'CANT_ACCOMMODATE':
-                ERR_MSG = 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
-                log(arg4, 'FAILURE\n', ERR_MSG)
-            else:
-                log(arg4, 'SUCCESS\n', '')
+            #server = placement_algorithm(arg1, arg2)
+            #if server == 'CANT_ACCOMMODATE':
+            #    ERR_MSG = 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
+            #    log(arg4, 'FAILURE\n', ERR_MSG)
+            #else:
+            #    log(arg4, 'SUCCESS\n', '')
 
             # for part a and b
             runnable_servers = []
@@ -95,12 +95,13 @@ def server_delete_command(arg1, arg2 = ''):
     
     # delete instance
     instances = parse_instances()
+    flavors = parse_flavors()
     if instances.has_key(arg1):
         hardware = parse_hardware('current')
         servers = hardware['server']
-        servers['mem'] += flavors[instances[arg1]['flavor']]['mem']
-        servers['ndisks'] += flavors[instances[arg1]['flavor']]['ndisks']
-        servers['vcpus'] += flavors[instances[arg1]['flavor']]['vcpus']
+        servers[instances[arg1]['server']]['mem'] += flavors[instances[arg1]['flavor']]['mem']
+        servers[instances[arg1]['server']]['ndisks'] += flavors[instances[arg1]['flavor']]['ndisks']
+        servers[instances[arg1]['server']]['vcpus'] += flavors[instances[arg1]['flavor']]['vcpus']
         instances.pop(arg1, None)
         updated = update_instances(instances)
         update_hardware(servers, hardware['rack'])
@@ -112,8 +113,12 @@ def server_delete_command(arg1, arg2 = ''):
 def server_list_command(arg1 = ''):
     # arg1 => executed command
 
-    instaces = parse_instances()
-    for key in instances.keys():
-        if arg1:
-            print key + ' ' + instances[key]['image'] + ' ' + instances[key]['flavor']
+    instances = parse_instances()
+    if instances:
+        for key in instances.keys():
+            if arg1:
+                print key + ' ' + instances[key]['image'] + ' ' + instances[key]['flavor']
+    else:
+        INFO_MSG = 'INFO: Instances not yet configured'
+        log(arg1, 'SUCCESS\n', INFO_MSG)    
     log(arg1, 'SUCCESS\n' ,'')

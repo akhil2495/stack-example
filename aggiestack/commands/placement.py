@@ -2,6 +2,7 @@ from helpers import parse_images
 from helpers import parse_instances
 from helpers import parse_hardware
 from helpers import parse_image_rack
+from common import admin_can_host_command
 
 def placement_algorithm(arg1, arg2):
     # arg1 : image name
@@ -24,7 +25,7 @@ def placement_algorithm(arg1, arg2):
         if usable_racks:
             hostable_racks = []
             for rack in usable_racks:
-                if hardware['rack'][rack] - images[key]['size'] < 0:
+                if hardware['rack'][rack] - images[key]['size'] > 0:
                     hostable_racks.append(rack)
             if hostable_racks:
                 hostable_servers = []
@@ -46,6 +47,24 @@ def placement_algorithm(arg1, arg2):
                     return 'CANT_ACCOMMODATE'
             else:
                 # clear an old image and update new image (change server-config)
+                max_rack = 0
+                for rack in usable_racks:
+                    if hardware['rack'][rack] > max_rack:
+                        max_rack = hardware['rack'][rack]
+                        chosen_rack = rack
+                hardware['rack'][chosen_rack] -= images[arg1]['size']
+                update_hardware(hardware)
+                temp = []
+                temp.append(chosen_rack)
+                im2rack[arg1] = temp
+                update_image_rack(im2rack)
+                hostable_servers = []
+                for server in hardware['server'].keys():
+                    if chosen_rack == hardware['server'][server]['rack']:
+                        if admin_can_host_command(server, arg2, ''):
+                            hostable_servers.append(server)
+                server = hostable_servers[0]
+                return server
         else:
             return 'CANT_ACCOMMODATE'
         

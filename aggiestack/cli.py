@@ -143,13 +143,13 @@ def check_command():
                 wrong_cmd_flag = True
             if sys.argv[5] != '--flavor':
                 wrong_cmd_flag = True
-        elif len(sys.argv == 4):
+        elif len(sys.argv) == 4:
             check = ''
             for i in range(2):
                 check += sys.argv[i+1] + ' '
             if check not in server_list:
                 wrong_cmd_flag = True
-        elif len(sys.argv == 3):
+        elif len(sys.argv) == 3:
             check = ''
             for i in range(2):
                 check += sys.argv[i+1] + ' '
@@ -229,7 +229,7 @@ def main():
                 elif options['instances'] == True:
                     admin_show_instances_command(executed_command())
                 elif options['imagecaches'] == True:
-                    if options['<rack_name>']
+                    if options['<rack_name>']:
                         admin_show_imagecaches_command(options['<rack_name>'], 
                                                        executed_command())
 

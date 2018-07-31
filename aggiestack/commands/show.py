@@ -15,7 +15,7 @@ def show_command(arg1, arg2 = ''):
             log(arg2, 'SUCCESS\n', '')
         else:
             ERR_MSG = 'ERROR : Hardware information not yet configured'
-            log(arg2, 'FAILURE\n', '')
+            log(arg2, 'FAILURE\n', ERR_MSG)
 
     elif arg1 == 'images':
         path = os.path.join(directory, '../image-config.txt')
