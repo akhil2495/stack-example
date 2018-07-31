@@ -69,11 +69,11 @@ def update_hardware(hardware, racks):
     with open(path, 'w') as file_handle:
         file_handle.write(str(len(racks.keys())) + '\n')
         for key in racks.keys():
-            file_handle.write(key + ' ' + racks[key] + '\n')
+            file_handle.write(key + ' ' + str(racks[key]) + '\n')
         file_handle.write(str(len(hardware.keys())) + '\n')
         for key in hardware.keys():
             current = hardware[key]
-            file_handle.write(key + ' ' + current['rack'] + ' ' + current['ip'] + ' ' + str(current['mem']) + ' ' + str(current['ndisks']) + ' ' + str(current['vcpus']) + '\n')
+            file_handle.write(key + ' ' + str(current['rack']) + ' ' + current['ip'] + ' ' + str(current['mem']) + ' ' + str(current['ndisks']) + ' ' + str(current['vcpus']) + '\n')
     return
 
 def parse_flavors():
@@ -127,10 +127,12 @@ def update_image_rack(im2rack):
     directory = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(directory, '../im2rack-config.txt')
 
-    if os.path.isfile(path):
-        with open(path, 'w') as file_handle:
-            for key in im2rack.keys():
-                file_handle.write(key + ' ' + im2rack[key] + '\n')
+    with open(path, 'w') as file_handle:
+        for key in im2rack.keys():
+            tot = ''
+            for l in im2rack[key]:
+                tot += l + ' '
+            file_handle.write(key + ' ' + tot + '\n')
 
 def parse_instances():
     

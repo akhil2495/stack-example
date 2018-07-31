@@ -46,26 +46,27 @@ def server_create_command(arg1, arg2, arg3, arg4 = ''):
             flavors = parse_flavors()
 
             # for part c
-            #server = placement_algorithm(arg1, arg2)
-            #if server == 'CANT_ACCOMMODATE':
-            #    ERR_MSG = 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
-            #    log(arg4, 'FAILURE\n', ERR_MSG)
-            #else:
-            #    log(arg4, 'SUCCESS\n', '')
-
-            # for part a and b
-            runnable_servers = []
-            for server in servers.keys():
-                if admin_can_host_command(server, arg2, ''):
-                    runnable_servers.append(server)
-            
-            # re-do a sophisticated strategy for choosing server
-            if runnable_servers:
-                server = runnable_servers[0]
-            else:
+            server = placement_algorithm(arg1, arg2)
+            if server == 'CANT_ACCOMMODATE':
                 ERR_MSG = 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
                 log(arg4, 'FAILURE\n', ERR_MSG)
                 return False
+            else:
+                log(arg4, 'SUCCESS\n', '')
+
+            # for part a and b
+            #runnable_servers = []
+            #for server in servers.keys():
+            #    if admin_can_host_command(server, arg2, ''):
+            #        runnable_servers.append(server)
+            
+            # re-do a sophisticated strategy for choosing server
+            #if runnable_servers:
+            #    server = runnable_servers[0]
+            #else:
+            #    ERR_MSG = 'ERROR: ' + str(arg3) + ' cannot be instantiated now due to shortage of resources'
+            #    log(arg4, 'FAILURE\n', ERR_MSG)
+            #    return False
             
             if arg3 not in instances.keys():
                 instances[arg3] = {'image': arg1, 'flavor': arg2, 'server': server}
