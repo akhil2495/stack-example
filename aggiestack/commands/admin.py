@@ -95,18 +95,23 @@ def admin_evacuate_command(arg1, arg2):
 
     # instances running in the rack from instance configuration file
     # add each instance one-by-one by checking
+    updateable_instances = []
+    images = []
+    flavors = []
     for key in instances.keys():
         if instances[key]['server'] in deleted_servers:
-            image = instances[key]['image']
-            flavor = instances[key]['flavor']
+            updateable_instances.append(key)
+            images.append(instances[key]['image'])
+            flavors.append(instances[key]['flavor'])
             instances.pop(key)
-            updated = update_instances(instances)
-            if server_create_command(image, flavor, key):
-                continue
-            else:
-                if arg2:
-                    # can also store them into a file that can be run after a while
-                    print 'ERROR: ' + key + ' cannot be accommodated right now'
+    updated = update_instances(instances)    
+    for i in range(len(updateable_instances)):
+        if server_create_command(images[i], flavors[i], updateable_instances[i]):
+            continue
+        else:
+            if arg2:
+                # can also store them into a file that can be run after a while
+                print 'ERROR: ' + key + ' had to be stopped at this moment for maintenance'
 
     # if something fails give an error/warning/info
     # update log
@@ -128,21 +133,26 @@ def admin_remove_command(arg1, arg2):
     
     # store all instances on this machine
     instances = parse_instances()
-    print instances
+    #print instances
 
     # add each instance one-by-one by checking
+    updateable_instances = []
+    images = []
+    flavors = []
     for key in instances.keys():
         if instances[key]['server'] == arg1:
-            image = instances[key]['image']
-            flavor = instances[key]['flavor']
+            images.append(instances[key]['image'])
+            flavors.append(instances[key]['flavor'])
+            updateable_instances.append(key)
             instances.pop(key)
-            updated = update_instances(instances)
-            if server_create_command(image, flavor, key, ''):
-                continue
-            else:
-                if arg2:
-                    # can also store them into a file which can run later
-                    print 'ERROR: ' + key + ' cannot be accommoated right now'
+    updated = update_instances(instances)
+    for i in range(len(updateable_instances)):
+        if server_create_command(images[i], flavors[i], updateable_instances[i], ''):
+            continue
+        else:
+            if arg2:
+                # can also store them into a file which can run later
+                print 'ERROR: ' + key + ' had to be stopped for maintenance'
 
     # if something fails give an error/warning/info
     # update log
@@ -165,7 +175,7 @@ def admin_add_command(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
     ips = []
     for key in hardware['server']:
         ips.append(hardware['server'][key]['ip'])
-    if arg5 not in racks:
+    if arg5 in racks:
         if arg4 not in ips:
             temp = dict()
             temp['mem'] = int(arg1)
@@ -176,9 +186,11 @@ def admin_add_command(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
         else:
             ERR_MSG = 'ERROR: The ip is already being used'
             log(arg7, 'FAILURE\n', ERR_MSG)
+            return
     else:
         ERR_MSG = 'ERROR: The rack specified is under maintenance or does not exist'
         log(arg7, 'FAILURE\n', ERR_MSG)
+        return
     hardware['server'][arg6] = temp
     update_hardware(hardware['server'], hardware['rack'])
     
