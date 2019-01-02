@@ -1,0 +1,455 @@
+aggiestack show hardware :: FAILURE
+aggiestack show images :: FAILURE
+aggiestack admin show hardware :: FAILURE
+aggiestack server create --image image --flavor flavor instance :: FAILURE
+aggiestack server create --image image --flavor flavor instance :: FAILURE
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images image-config.txt :: FAILURE
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors flavor-config.txt :: FAILURE
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack config --hardware hdwr-config.txt :: FAILURE
+aggiestack show hardware :: SUCCESS
+aggiestack config --images image-config.txt :: FAILURE
+aggiestack show images :: SUCCESS
+aggiestack config --flavors flavor-config.txt :: FAILURE
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack admin evacuate r1 :: FAILURE
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack admin evacuate r1 :: FAILURE
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-second-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-second-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-second-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-second-instance :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: FAILURE
+aggiestack admin evacuate r1 :: FAILURE
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin evacuate r1 :: FAILURE
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin evacuate r1 :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin evacuate r1 :: FAILURE
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin remove k3 :: FAILURE
+aggiestack admin remove k3 :: FAILURE
+aggiestack admin remove m4 :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware config/hdwr-config.txt :: FAILURE
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin evacuate r1 :: SUCCESS
+aggiestack admin remove m4 :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack admin remove k3 :: SUCCESS
+aggiestack admin remove k1 :: SUCCESS
+aggiestack admin remove m1 :: SUCCESS
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+4SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine1 :: FAILURE
+aggiestack admin evacuate r1 :: SUCCESS
+aggiestack admin evacuate r1 :: FAILURE
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: FAILURE
+aggiestack admin show instances :: SUCCESS
+4SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+4SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack admin remove m2 :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin remove k3 :: SUCCESS
+aggiestack admin remove calvin :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show flavors :: FAILURE
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack show instances :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin remove m4 :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin remove k3 :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin remove k2 :: SUCCESS
+aggiestack admin remove calvin :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor xlarge my-third-instance :: SUCCESS
+aggiestack admin remove k1 :: SUCCESS
+aggiestack admin evacuate r1 :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add --mem 8 --disk 4 --vcpus 4 --ip 128.0.0.1 --rack r1 newmachine :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add --mem 8 --disk 4 --vcpus 4 --ip 128.0.0.1 --rack r1 newmachine :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add --mem 8 --disk 4 --vcpus 4 --ip 128.0.0.1 --rack r1 newmachine :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor xlarge my-third-instance :: SUCCESS
+aggiestack admin evacuate r1 :: SUCCESS
+aggiestack server create --image linux-ubutnu --flavor xlarge my-fourth-instance :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add --mem 8 --disk 4 --vcpus 4 --ip 128.0.0.1 --rack r1 newmachine :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware aggiestack/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack config --images aggiestack/image-config.txt :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack config --flavors aggiestack/flavor-config.txt :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor xlarge my-third-instance :: SUCCESS
+aggiestack admin evacuate r1 :: SUCCESS
+aggiestack server create --image linux-ubutnu --flavor xlarge my-fourth-instance :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack admin add --mem 8 --disk 4 --vcpus 4 --ip 128.0.0.1 --rack r1 newmachine :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack server create --image IMAGE --flavor FLAVOR_NAME INSTANCE_NAME :: FAILURE
+aggiestack server create --image IMAGE --flavor FLAVOR_NAME INSTANCE_NAME :: FAILURE
+aggiestack show images :: FAILURE
+aggiestack show hardware :: FAILURE
+aggiestack show flavors :: FAILURE
+aggiestack show hardware :: FAILURE
+aggiestack config --hardware /home/akhil/Desktop/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack admin show hardware :: FAILURE
+aggiestack show hardware :: SUCCESS
+aggiestack admin show hardware :: FAILURE
+aggiestack config --hardware /home/akhil/Desktop/hdwr-config.txt :: SUCCESS
+aggiestack config --hardware /home/akhil/Desktop/hdwr-config.txt :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack show images :: FAILURE
+aggiestack admin show images :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack server delete INSTANCE_NAME :: FAILURE
+aggiestack server list :: SUCCESS
+aggiestack server list :: SUCCESS
+aggiestack config --image aggiestack/image-config.txt :: FAILURE
+aggiestack config --images aggiestack/image-config.txt :: FAILURE
+aggiestack config --images /home/akhil/Desktop/image-config.txt :: SUCCESS
+aggiestack config --flavors /home/akhil/Desktop/flavor-config.txt :: SUCCESS
+aggiestack server list :: SUCCESS
+aggiestack server list :: SUCCESS
+aggiestack server delete INSTANCE_NAME :: FAILURE
+aggiestack server create --image IMAGE --flavor FLAVOR_NAME INSTANCE_NAME :: FAILURE
+aggiestack show images :: SUCCESS
+aggiestack show flavors :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small my-first-instance :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack show instances :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor medium my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor xlarge my-second-instance :: FAILURE
+aggiestack server create --image linux-ubuntu --flavor xlarge my-second-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack server delete my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin server list :: FAILURE
+aggiestack server list :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin evacuate r1 :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack config --flavors /home/akhil/Desktop/flavor-config.txt :: SUCCESS
+aggiestack config --images /home/akhil/Desktop/image-config.txt :: SUCCESS
+aggiestack config --hardware /home/akhil/Desktop/hardware-config.txt :: FAILURE
+aggiestack config --hardware /home/akhil/Desktop/hdwr-config.txt :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin evacuate r2 :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack config --hardware /home/akhil/Desktop/hdwr-config.txt :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin evacuate r2 :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack config --hardware /home/akhil/Desktop/hdwr-config.txt :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-second-instance :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin evacuate r2 :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-second-instance :: FAILURE
+aggiestack server create --image linux-sles --flavor xlarge my-second-instance :: FAILURE
+aggiestack admin show instances :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-first-instance :: FAILURE
+aggiestack config --hardware /home/akhil/Desktop/hdwr-config.txt :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-second-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-first-instance :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin evacuate r2 :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack admin remove dora :: SUCCESS
+aggiestack admin remove dora :: FAILURE
+aggiestack admin remove k1 :: FAILURE
+aggiestack admin remove hobbes :: SUCCESS
+aggiestack admin add --mem 10 --disk 10 --vcpus 12 --ip 128.0.0.2 --rack r1 new_machine :: FAILURE
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin add --mem 10 --disk 10 --vcpus 12 --ip 128.0.0.2 --rack r1 new_machine :: FAILURE
+aggiestack admin add --mem 10 --disk 10 --vcpus 12 --ip 128.0.0.2 --rack r1 new_machine :: FAILURE
+aggiestack admin add --mem 10 --disk 10 --vcpus 12 --ip 128.0.0.20 --rack r1 new_machine :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack show hardware :: SUCCESS
+aggiestack show images :: SUCCESS
+aggiestack server create :: FAILURE
+aggiestack show images :: SUCCESS
+aggiestack server create --image linux-ubuntu --flavor small test-instance :: FAILURE
+aggiestack admin show hardware :: SUCCESS
+aggiestack config --hardware /home/akhil/Desktop/hdwr-config.txt :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack admin show instances :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack admin show hardware :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor xlarge my-third-instance :: FAILURE
+aggiestack server create --image linux-sles --flavor small my-second-instance :: FAILURE
+aggiestack admin show hardware :: SUCCESS
+aggiestack server create --image linux-sles --flavor small my-second-instance :: FAILURE
+aggiestack server create --image linux-sles --flavor small my-second-instance :: FAILURE
+aggiestack server create --image linux-sles --flavor small my-second-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor small my-first-instance :: SUCCESS
+aggiestack server create --image linux-sles --flavor small my-second-instance :: SUCCESS
